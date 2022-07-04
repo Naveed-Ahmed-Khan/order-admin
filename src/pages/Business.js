@@ -6,7 +6,7 @@ export default function Business({ rows }) {
 
   const [filterValue, setFilterValue] = useState("");
   return (
-    <div className="pt-[10vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
+    <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
       <div className="">
         <div className="mb-4 sm:flex items-center justify-between w-full">
           <h2 className="text-2xl sm:text-3xl text-primary-500 font-semibold leading-tight">

@@ -42,7 +42,7 @@ const Signup = () => {
       <Backgroundlogin />
       <div className="container md:max-w-xl xl:max-w-screen-xl mx-auto xl:flex pt-[10vh] sm:pt-[15vh] xl:pt-[20vh]">
         <div className="xl:w-3/5 xl:px-32 pb-4 xl:pb-0">
-          <h1 className="text-center xl:text-left text-2xl sm:text-4xl xl:text-5xl font-rublik font-bold text-primary-500">
+          <h1 className="text-center xl:text-left text-2xl sm:text-4xl xl:text-6xl font-rublik font-bold text-primary-500">
             Grow your business today!
           </h1>
           <p className="text-center pt-2 xl:pt-8 xl:text-left text-sm sm:text-base xl:text-lg font-rublik font-medium text-[#717171]">

@@ -68,11 +68,11 @@ export default function LineChart() {
           bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        {/* <CartesianGrid strokeDasharray="3 3" /> */}
+        <XAxis tick={{ fill: "white" }} dataKey="name" />
+        <YAxis tick={{ fill: "white" }} />
         <Tooltip />
-        <Area type="monotone" dataKey="uv" stroke="#013B8D" fill="#013B8D" />
+        <Area type="linear" dataKey="uv" stroke="#6F88FC" fill="#6F88FC" />
       </AreaChart>
     </ResponsiveContainer>
   );

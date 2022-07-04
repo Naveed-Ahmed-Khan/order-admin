@@ -9,7 +9,7 @@ export default function Items() {
 
   const [filterValue, setFilterValue] = useState("");
   return (
-    <div className="pt-[5vh] pb-10 w-full sm:max-w-screen-lg mx-auto">
+    <div className="pt-[5vh] md:pt-[12vh] pb-10 w-full sm:max-w-screen-lg mx-auto">
       <div className="mb-4 sm:flex items-center justify-between w-full">
         <h2 className="text-2xl sm:text-3xl text-primary-500 font-semibold leading-tight">
           Items

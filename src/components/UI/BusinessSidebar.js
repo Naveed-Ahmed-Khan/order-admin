@@ -4,7 +4,7 @@
 import { Link, useLocation } from "react-router-dom";
 import Backdrop from "./Backdrop";
 
-const Sidebar = (props) => {
+const BusinessSidebar = (props) => {
   const location = useLocation();
 
   return (
@@ -21,23 +21,23 @@ const Sidebar = (props) => {
       >
         <nav className="bg-light w-40 h-screen justify-between flex flex-col">
           <div className="flex flex-col items-center justify-center mt-10 mb-10">
-            <Link to={"/"}>
+            <Link to={"/dashboard/home"}>
               <h2 className="text-white text-3xl font-bold">LOGO</h2>
             </Link>
             <div className="mt-8">
               <ul>
                 <li className="my-12 text-center">
-                  <Link to={"/home"}>
+                  <Link to={"/dashboard/home"}>
                     <span
                       className={`${
-                        location.pathname === "/home"
+                        location.pathname === "/dashboard/home"
                           ? "text-white"
                           : "text-[#45E3FF]"
                       }  mx-auto hover:text-white transition-all duration-300`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8"
+                        className="h-8 w-8"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -47,17 +47,17 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/items"}>
+                  <Link to={"/dashboard/items"}>
                     <span
                       className={`${
-                        location.pathname === "/items"
+                        location.pathname === "/dashboard/items"
                           ? "text-white"
                           : "text-[#45E3FF]"
                       }   mx-auto hover:text-white transition-all duration-300`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8"
+                        className="h-8 w-8"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -67,50 +67,32 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/users"}>
+                  <Link to={"/dashboard/add-item"}>
                     <span
                       className={`${
-                        location.pathname === "/users"
+                        location.pathname === "/dashboard/add-item"
                           ? "text-white"
                           : "text-[#45E3FF]"
                       }   mx-auto hover:text-white transition-all duration-300`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                      </svg>
-                    </span>
-                  </Link>
-                </li>
-                <li className="my-12 text-center">
-                  <Link to={"/business"}>
-                    <span
-                      className={`${
-                        location.pathname === "/business"
-                          ? "text-white"
-                          : "text-[#45E3FF]"
-                      }   mx-auto hover:text-white transition-all duration-300`}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
                       >
                         <path
-                          fill-rule="evenodd"
-                          d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                          clip-rule="evenodd"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
                         />
-                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                       </svg>
                     </span>
                   </Link>
                 </li>
+
                 <li className="my-12 text-center">
                   <Link to={"/login"}>
                     <span
@@ -122,7 +104,7 @@ const Sidebar = (props) => {
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8"
+                        className="h-8 w-8"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -145,11 +127,13 @@ const Sidebar = (props) => {
               /* onClick={async () => {
                     await signOut(auth);
                   }} */
-              to={"/"}
+              to={"/dashboard/home"}
             >
               <span
                 className={`${
-                  location.pathname === "/" ? "text-white" : "text-[#45E3FF]"
+                  location.pathname === "/dashboard/home"
+                    ? "text-white"
+                    : "text-[#45E3FF]"
                 }  mx-auto hover:text-white transition-all duration-300`}
               >
                 <svg
@@ -191,23 +175,23 @@ const Sidebar = (props) => {
           <div className="w-full max-w-[180px]">
             <nav className="bg-light w-40 h-screen justify-between flex flex-col">
               <div className="flex flex-col items-center justify-center mt-20 mb-10">
-                <Link to={"/"}>
+                <Link to={"/dashboard/home"}>
                   <h2 className="text-white text-3xl font-bold">LOGO</h2>
                 </Link>
                 <div className="mt-4 ">
                   <ul>
                     <li className="my-12 text-center">
-                      <Link to={"/home"}>
+                      <Link to={"/dashboard/home"}>
                         <span
                           className={`${
-                            location.pathname === "/home"
+                            location.pathname === "/dashboard/home"
                               ? "text-white"
                               : "text-[#45E3FF]"
                           }  mx-auto hover:text-white transition-all duration-300`}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8"
+                            className="h-8 w-8"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -217,17 +201,17 @@ const Sidebar = (props) => {
                       </Link>
                     </li>
                     <li className="my-12 text-center">
-                      <Link to={"/items"}>
+                      <Link to={"/dashboard/items"}>
                         <span
                           className={`${
-                            location.pathname === "/items"
+                            location.pathname === "/dashboard/items"
                               ? "text-white"
                               : "text-[#45E3FF]"
                           }   mx-auto hover:text-white transition-all duration-300`}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8"
+                            className="h-8 w-8"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -237,50 +221,32 @@ const Sidebar = (props) => {
                       </Link>
                     </li>
                     <li className="my-12 text-center">
-                      <Link to={"/users"}>
+                      <Link to={"/dashboard/add-item"}>
                         <span
                           className={`${
-                            location.pathname === "/users"
+                            location.pathname === "/dashboard/add-item"
                               ? "text-white"
                               : "text-[#45E3FF]"
                           }   mx-auto hover:text-white transition-all duration-300`}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                          </svg>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="my-12 text-center">
-                      <Link to={"/business"}>
-                        <span
-                          className={`${
-                            location.pathname === "/business"
-                              ? "text-white"
-                              : "text-[#45E3FF]"
-                          }   mx-auto hover:text-white transition-all duration-300`}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                            className="h-8 w-8"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
                           >
                             <path
-                              fill-rule="evenodd"
-                              d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                              clip-rule="evenodd"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
                             />
-                            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                           </svg>
                         </span>
                       </Link>
                     </li>
+
                     <li className="my-12 text-center">
                       <Link to={"/login"}>
                         <span
@@ -292,7 +258,7 @@ const Sidebar = (props) => {
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8"
+                            className="h-8 w-8"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -315,11 +281,11 @@ const Sidebar = (props) => {
                   /* onClick={async () => {
                     await signOut(auth);
                   }} */
-                  to={"/"}
+                  to={"/dashboard/home"}
                 >
                   <span
                     className={`${
-                      location.pathname === "/"
+                      location.pathname === "/dashboard/home"
                         ? "text-white"
                         : "text-[#45E3FF]"
                     }  mx-auto hover:text-white transition-all duration-300`}
@@ -354,4 +320,4 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+export default BusinessSidebar;

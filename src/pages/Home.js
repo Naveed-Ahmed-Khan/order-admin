@@ -11,7 +11,7 @@ const Home = () => {
   const [selectedSlot, setSelectedSlot] = useState(null);
 
   return (
-    <div className="p-4  md:px-20 xl:h-screen grid place-content-center grid-cols-1 gap-y-8 xl:gap-y-6 xl:gap-x-8 xl:grid-cols-12">
+    <div className="p-4 md:p-10 mt-[4.25rem] xl:mb-6 grid place-content-center grid-cols-1 gap-y-8 xl:gap-y-6 xl:gap-x-8 xl:grid-cols-12">
       <div className="xl:col-span-6">
         <UsersTable />
       </div>
@@ -21,7 +21,7 @@ const Home = () => {
       <div className="xl:col-span-5">
         <EarningCard />
       </div>
-      <div className="xl:col-span-2">
+      <div className=" xl:col-span-2">
         <Chart />
       </div>
       <div className="xl:col-span-5">

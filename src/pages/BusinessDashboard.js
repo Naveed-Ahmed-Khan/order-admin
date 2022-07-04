@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import BackgroundDashboard from "../components/UI/BackgroundDashboard";
+import BusinessSidebar from "../components/UI/BusinessSidebar";
+import DetailsSidebar from "../components/UI/DetailsSidebar";
 // import { Outlet } from "react-router-dom";
 import Navbar from "../components/UI/Navbar";
 import Sidebar from "../components/UI/Sidebar";
 // import HomeBackground from "../components/HomeBackground";
 // import { useStateContext } from "../contexts/ContextProvider";
 
-const Dashboard = () => {
+const BusinessDashboard = () => {
   // const { unReadMessages } = useStateContext();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [open, setOpen] = useState(false);
@@ -20,7 +22,7 @@ const Dashboard = () => {
         {/* <HomeBackground /> */}
         <BackgroundDashboard />
 
-        <Sidebar
+        <BusinessSidebar
           open={open}
           setOpen={setOpen}
           showBackdrop={showBackdrop}
@@ -32,8 +34,12 @@ const Dashboard = () => {
           setOpen={setOpen}
           showBackdrop={showBackdrop}
           setShowBackdrop={setShowBackdrop}
-          setIsChatOpen={setIsChatOpen}
-          isChatOpen={isChatOpen}
+        />
+        <DetailsSidebar
+          open={open}
+          setOpen={setOpen}
+          showBackdrop={showBackdrop}
+          setShowBackdrop={setShowBackdrop}
         />
         <div className="pt-14 md:pt-0 md:ml-40 relative overflow-auto ">
           <Outlet />
@@ -43,4 +49,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default BusinessDashboard;

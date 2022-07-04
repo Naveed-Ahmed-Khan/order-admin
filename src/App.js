@@ -1,10 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import AddItem from "./pages/AddItem";
+import AllGalleries from "./pages/AllGalleries";
 import Business from "./pages/Business";
+import BusinessDashboard from "./pages/BusinessDashboard";
+import BusinessHome from "./pages/BusinessHome";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
-import New from "./pages/New";
 import Signup from "./pages/Signup";
 import Users from "./pages/Users";
 
@@ -21,10 +24,11 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/business" element={<Business />} />
         <Route path="/items" element={<Items />} />
-
-        {/* <Route path="/approved-appointments" element={<Approved />} />
-        <Route path="/admin" element={<UserDetails />} />
-        <Route path="/chat" element={<ChatPage />} /> */}
+      </Route>
+      <Route path="/dashboard" element={<BusinessDashboard />}>
+        <Route path="/dashboard/home" element={<BusinessHome />} />
+        <Route path="/dashboard/items" element={<AllGalleries />} />
+        <Route path="/dashboard/add-item" element={<AddItem />} />
       </Route>
     </Routes>
   );

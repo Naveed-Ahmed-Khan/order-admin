@@ -17,7 +17,7 @@ const renderColorfulLegendText = (value, entry) => {
 
 export default function Chart() {
   return (
-    <>
+    <div className="h-[19rem]">
       <div
         style={{
           width: "100%",
@@ -27,7 +27,7 @@ export default function Chart() {
         }}
       >
         <div className="-mb-14 z-50">
-          <h2 className="text-2xl sm:text-3xl text-[#494949] font-semibold leading-tight">
+          <h2 className="text-2xl text-[#494949] font-semibold leading-tight">
             Statistics
           </h2>
           <div className="flex gap-2 w-full">
@@ -35,7 +35,7 @@ export default function Chart() {
             <Select />
           </div>
         </div>
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               dataKey="value"
@@ -58,33 +58,6 @@ export default function Chart() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      {/* <div style={{ width: "fit", height: "100%" }}>
-      <ResponsiveContainer>
-        <PieChart >
-          <Legend
-            height={36}
-            iconType="circle"
-            layout="horizontal"
-            verticalAlign="bottom"
-            align="center"
-            iconSize={10}
-            padding={5}
-            formatter={renderColorfulLegendText}
-          />
-          <Pie
-            data={data}
-            cx={120}
-            cy={200}
-            labelLine={false}
-            innerRadius={50}
-            outerRadius={80}
-            fill="#8884d8"
-            paddingAngle={0}
-            dataKey="value"
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    </div> */}
-    </>
+    </div>
   );
 }
