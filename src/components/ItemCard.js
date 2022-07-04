@@ -22,17 +22,19 @@ const ItemCard = () => {
           <div className="p-4 sm:p-6 sm:h-[21rem]">
             <div className="sm:flex justify-between gap-4">
               <div
-                className="w-full sm:w-[25%] sm:grid gap-2 place-items-center flex sm:grid-cols-2
+                className="w-full sm:w-[20%] sm:grid gap-2 place-items-center flex sm:grid-cols-2
               overflow-x-auto"
               >
                 <img className="col-span-full" src={balloon} alt="" />
                 <img className="" src={balloon} alt="" />
                 <img className="" src={balloon} alt="" />
               </div>
-              <div className="w-full sm:w-[75%] text-lg font-medium text-[#464646] space-y-4">
-                <h5>Hot Air Balloon Festival, Alsaka</h5>
-                <div className="flex justify-between">
-                  <p className="flex gap-2 text-xs items-center text-[#909090]">
+              <div className="w-full sm:w-[80%] overflow-auto  space-y-4">
+                <h5 className="text-lg font-medium text-[#464646] ">
+                  Hot Air Balloon Festival, Alsaka
+                </h5>
+                <div className="flex space-x-5">
+                  <p className="flex gap-1 text-xs items-center text-[#909090]">
                     <span>
                       <svg
                         className="object-contain h-4"
@@ -48,7 +50,7 @@ const ItemCard = () => {
                     </span>
                     Dec 21, 2021
                   </p>
-                  <p className="flex gap-2 text-xs items-center text-[#909090]">
+                  <p className="flex gap-1 text-xs items-center text-[#909090]">
                     <span>
                       <svg
                         className="object-contain h-4"
@@ -64,7 +66,7 @@ const ItemCard = () => {
                     </span>
                     Dec 21, 2021
                   </p>
-                  <p className="flex gap-2 text-xs items-center text-[#909090]">
+                  <p className="flex gap-1 text-xs items-center text-[#909090]">
                     <span>
                       <svg
                         className="object-contain h-4"
@@ -81,14 +83,14 @@ const ItemCard = () => {
                     Dec 21, 2021
                   </p>
                 </div>
-                <p className="text-sm text-[#585858] h-[6rem] overflow-auto scrollbar-thin scrollbar-thumb-gray-200">
+                <p className="text-xs text-[#585858] h-[6rem] overflow-auto scrollbar-thin scrollbar-thumb-gray-200">
                   A balloon release is a ceremonial event in which a number of
                   hydrogen- or helium-filled balloons are unleashed into the
                   sky. Balloon releases can be done as a prayer ceremony, to
                   create a photo opportunity, to raise awareness of a cause or
                   campaign, or as a competitive long-distance race.
                 </p>
-                <div className="flex w-full justify-between gap-6 mt-2 h-fit">
+                <div className="flex w-full justify-end gap-5 mt-2 h-fit p-2">
                   <div className="text-sm text-white">
                     <Button fullWidth type={"button"}>
                       Show more

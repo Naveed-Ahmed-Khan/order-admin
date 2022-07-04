@@ -1,15 +1,16 @@
 import Backgroundlogin from "../components/UI/Backgroundlogin";
 import Button from "../components/UI/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  /*const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { setCurrentUser } = useStateContext();
+  /*const { setCurrentUser } = useStateContext();
   const { login } = useAuth(); */
 
   /* const signIn = async (email, password) => {
@@ -49,7 +50,6 @@ const Login = () => {
             Add events, visitors, restaurants and let visitors know about you.
           </p>
         </div>
-
         <div className="xl:w-2/5 space-y-5">
           <div className="mt-4 -mb-4 text-lg text-center text-red-500 transition-all duration-500 scale-100">
             {/* {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>} */}
@@ -90,11 +90,11 @@ const Login = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Username"
-              /* value={email}
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 relative flex flex-col items-center">
@@ -137,18 +137,24 @@ const Login = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Password"
-              /* value={email}
+              value={password}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setPassword(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 flex flex-col items-center pt-6 xl:pt-8">
             <Button
               onClick={() => {
                 // signIn(email, password);
-                navigate("/home");
+                if (email.includes("business")) {
+                  navigate("/dashboard/home");
+                } else if (email.includes("admin")) {
+                  navigate("/home");
+                } else {
+                  setErrorMessage("Invalid Email");
+                }
               }}
               fullWidth
               type={"button"}

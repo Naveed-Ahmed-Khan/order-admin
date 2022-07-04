@@ -68,11 +68,26 @@ export default function LineChart() {
           bottom: 0,
         }}
       >
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="48%" stopColor="#116BEB" stopOpacity={1} />
+            <stop offset="100%" stopColor="#ffff" stopOpacity={0.1} />
+          </linearGradient>
+          <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+          </linearGradient>
+        </defs>
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
         <XAxis tick={{ fill: "white" }} dataKey="name" />
         <YAxis tick={{ fill: "white" }} />
         <Tooltip />
-        <Area type="linear" dataKey="uv" stroke="#6F88FC" fill="#6F88FC" />
+        <Area
+          type="linear"
+          dataKey="uv"
+          stroke="#6F88FC"
+          fill="url(#colorUv)"
+        />
       </AreaChart>
     </ResponsiveContainer>
   );

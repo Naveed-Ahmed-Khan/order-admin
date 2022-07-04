@@ -202,7 +202,7 @@ const Signup = () => {
             <Button
               onClick={() => {
                 // signIn(email, password);
-                navigate("/home");
+                navigate("/dashboard/home");
               }}
               fullWidth
               type={"button"}

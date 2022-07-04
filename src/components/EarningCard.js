@@ -20,17 +20,17 @@ export default function EarningCard({ rows }) {
           </div>
         </div>
         <div className="sm:h-[19rem] flex flex-col w-full shadow-2xl rounded-3xl bg-[#013b8d]">
-          <div className="sm:h-1/3 pl-4 pt-2">
+          <div className=" mb-6 pl-4 pt-2">
             <p className="text-sm sm:text-base text-white font-semibold leading-tight">
               Earning by month
             </p>
           </div>
-          <div className="sm:h-1/3 grid place-content-center">
-            <h2 className="text-2xl sm:text-3xl text-white font-semibold leading-tight">
+          <div className="sm:h-1/4 grid place-content-center">
+            <h2 className="text-3xl sm:text-4xl text-white font-semibold leading-tight">
               $10,000.54
             </h2>
           </div>
-          <div className="p-4 sm:p-6 sm:h-2/3">
+          <div className="p-4 sm:p-6 sm:h-3/4">
             <LineChart />
           </div>
         </div>
