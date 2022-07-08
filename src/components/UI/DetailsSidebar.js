@@ -9,6 +9,7 @@ import { useStateContext } from "../../contexts/ContextProvider";
 const DetailsSidebar = (props) => {
   const location = useLocation();
   const { showDetails, updateShowDetails } = useStateContext();
+  console.log(showDetails);
 
   return (
     <>
@@ -17,7 +18,7 @@ const DetailsSidebar = (props) => {
         className={`z-50 fixed right-0 flex flex-col w-full max-w-md bg-[#f6f6f6]
         overflow-y-auto 
         ${
-          showDetails === true
+          showDetails !== null
             ? "-translate-x-0 opacity-100"
             : "translate-x-full opacity-0"
         } transition ease-out duration-300`}
@@ -27,7 +28,7 @@ const DetailsSidebar = (props) => {
             <div className="mb-0 sm:mb-8 flex justify-end">
               <svg
                 onClick={() => {
-                  updateShowDetails(false);
+                  updateShowDetails(null);
                 }}
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 text-primary-500 cursor-pointer"
@@ -45,38 +46,29 @@ const DetailsSidebar = (props) => {
             </div>
             <div>
               <div className="mb-0 xl:mb-6 sm:flex items-center justify-between w-full">
-                <h2 className="text-2xl text-primary-500   font-semibold leading-tight">
-                  Skardu
+                <h2 className="text-2xl text-primary-500 font-semibold leading-tight">
+                  {showDetails?.name}
                 </h2>
-                <div className="mt-6 sm:mt-0 text-end">
-                  {/* <p className="font-semibold text-[#494949]">See all</p> */}
+                <div className="">
+                  {showDetails?.date && (
+                    <p className="text-black">
+                      {showDetails?.date.toDate().toDateString() || ""}
+                    </p>
+                  )}
                 </div>
               </div>
-              <div className="mb-6">
-                <img src={skardu} alt="" />
+              <div className="mb-6 h-56 rounded-xl overflow-clip">
+                <img
+                  className="object-cover h-full w-full"
+                  src={showDetails?.image}
+                  alt=""
+                />
               </div>
             </div>
+
             <div className="h-[35vh] overflow-auto scrollbar-thin scrollbar-thumb-transparent">
-              <p className="text-black opacity-50">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Recusandae itaque, ipsam eos repellendus aut natus perspiciatis
-                nobis iusto aperiam unde assumenda sint aliquam tempora,
-                voluptatibus cum consequuntur ipsa possimus optio magnam saepe
-                dolor? Minima, sed repellendus harum corrupti quia doloremque.
-              </p>
-              <p className="text-black opacity-50">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Recusandae itaque, ipsam eos repellendus aut natus perspiciatis
-                nobis iusto aperiam unde assumenda sint aliquam tempora,
-                voluptatibus cum consequuntur ipsa possimus optio magnam saepe
-                dolor? Minima, sed repellendus harum corrupti quia doloremque.
-              </p>
-              <p className="text-black opacity-50">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Recusandae itaque, ipsam eos repellendus aut natus perspiciatis
-                nobis iusto aperiam unde assumenda sint aliquam tempora,
-                voluptatibus cum consequuntur ipsa possimus optio magnam saepe
-                dolor? Minima, sed repellendus harum corrupti quia doloremque.
+              <p className="text-black opacity-50 text-sm">
+                {showDetails?.desc}
               </p>
             </div>
           </section>
@@ -142,13 +134,13 @@ const DetailsSidebar = (props) => {
           </section>
         </div>
       </div>
-      <Backdrop
+      {/* <Backdrop
         showBackdrop={props.showBackdrop}
         onClick={() => {
           props.setOpen(!props.open);
           props.setShowBackdrop(false);
         }}
-      />
+      /> */}
       {/* Mobile Sidebar */}
     </>
   );

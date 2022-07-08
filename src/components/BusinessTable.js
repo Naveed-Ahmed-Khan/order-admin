@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
-// import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const BusinessTable = ({ rows }) => {
-  // const { users } = useStateContext();
+  const { businesses } = useStateContext();
 
   const [filterValue, setFilterValue] = useState("");
   return (
@@ -30,110 +30,27 @@ const BusinessTable = ({ rows }) => {
               <h3 className="col-span-1 text-right">{""}</h3>
             </div>
             <div className="h-[14.65rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2 ">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium">
-                <div className="col-span-2 flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="col-span-2 py-3 text-center">Email</p>
-                <p className="col-span-1  py-3 text-right">...</p>
-              </div>
+              {businesses?.map((business) => {
+                return (
+                  <div
+                    key={business.id}
+                    className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium"
+                  >
+                    <div className="col-span-2 flex items-center gap-2">
+                      <img
+                        className="object-contain h-8"
+                        src={profile}
+                        alt=""
+                      />
+                      <p className="py-3 text-left">{business.name}</p>
+                    </div>
+                    <p className="col-span-2 py-3 text-center">
+                      {business.subscription}
+                    </p>
+                    <p className="col-span-1  py-3 text-right">...</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 // import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 /* import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../api/firebase-config";
 import useAppointments from "../hooks/useAppointments";
@@ -8,17 +9,41 @@ import useFetch from "../hooks/useFetch"; */
 const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
-  const [showDetails, setShowDetails] = useState(false);
-  const [check, setCheck] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [availability, setAvailability] = useState([]);
-  const [appointments, setAppointments] = useState([]);
-  const [currentUser, setCurrentUser] = useState([]);
-  const [unReadMessages, setUnReadMessages] = useState(0);
+  const [check, setCheck] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { data: customersData } = useFetch("customers", check);
+  const { data: businessesData } = useFetch("businesses", check);
+  const { data: eventsData } = useFetch("events", check);
+  const { data: locationsData } = useFetch("locations", check);
 
+  const [showDetails, setShowDetails] = useState(null);
+  const [customers, setCustomers] = useState([]);
+  const [businesses, setBusinesses] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    const initialize = () => {
+      // setLoading(true)
+      setCustomers(customersData);
+      setBusinesses(businessesData);
+      setLocations(locationsData);
+      setEvents(eventsData);
+      // setLoading(false);
+    };
+    initialize();
+  }, [customersData, businessesData, locationsData, eventsData]);
+
+  console.log(customers);
+
+  const updateCheck = () => {
+    setCheck(!check);
+  };
   const updateShowDetails = (value) => {
     setShowDetails(value);
   };
+
+  // console.log(customers);
 
   /* const { data: usersData } = useFetch("Users", check);
   const { data: availabilityData } = useFetch("weekstatus", check);
@@ -38,9 +63,6 @@ export const ContextProvider = ({ children }) => {
     setUnReadMessages(unRead);
   };
 
-  const updateCheck = () => {
-    setCheck(!check);
-  };
 
   const updateUsers = (data) => {
     setUsers(data);
@@ -122,19 +144,23 @@ export const ContextProvider = ({ children }) => {
     });
   };
  */
-  console.log(appointments);
-  console.log(users);
 
   const exportValues = {
+    loading,
     showDetails,
     updateShowDetails,
+    customers,
+    businesses,
+    locations,
+    events,
+    updateCheck,
+
     /* currentUser,
     users,
     appointments,
     availability,
     unReadMessages,
     setCurrentUser,
-    updateCheck,
     updateAppointments,
     updateAvailability,
     updateOffday,

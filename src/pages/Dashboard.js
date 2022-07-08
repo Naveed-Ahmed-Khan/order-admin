@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import BackgroundDashboard from "../components/UI/BackgroundDashboard";
+import DetailsSidebar from "../components/UI/DetailsSidebar";
 // import { Outlet } from "react-router-dom";
 import Navbar from "../components/UI/Navbar";
 import Sidebar from "../components/UI/Sidebar";
@@ -35,6 +36,9 @@ const Dashboard = () => {
           setIsChatOpen={setIsChatOpen}
           isChatOpen={isChatOpen}
         />
+
+        <DetailsSidebar />
+
         <div className="pt-14 md:pt-0 md:ml-40 relative overflow-auto ">
           <Outlet />
         </div>

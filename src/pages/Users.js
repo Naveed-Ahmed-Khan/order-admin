@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
-// import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../contexts/ContextProvider";
 export default function Users({ rows }) {
-  // const { users } = useStateContext();
+  const { customers } = useStateContext();
 
   const [filterValue, setFilterValue] = useState("");
   return (
     <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
       <div className="mb-4 sm:flex items-center justify-between w-full">
         <h2 className="text-2xl sm:text-3xl text-primary-500 font-semibold leading-tight">
-          Users
+          Customers
         </h2>
         <div className="mt-6 sm:mt-0 text-end">
           <form className="relative flex items-center md:flex-row w-full sm:w-fit md:space-x-3 md:space-y-0 ">
@@ -53,78 +53,21 @@ export default function Users({ rows }) {
             <h3 className="text-right">Join date</h3>
           </div>
           <div className="h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
-            <div className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium">
-              <div className="flex items-center gap-2">
-                <img className="object-contain h-8" src={profile} alt="" />
-                <p className="py-3 text-left">Name</p>
-              </div>
-              <p className="py-3 text-center">Email</p>
-              <p className="py-3 text-right">Join Date</p>
-            </div>
+            {customers.map((customer) => {
+              return (
+                <div
+                  key={customer.id}
+                  className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium"
+                >
+                  <div className="flex items-center gap-2">
+                    <img className="object-contain h-8" src={profile} alt="" />
+                    <p className="py-3 text-left">{customer.name}</p>
+                  </div>
+                  <p className="py-3 text-center">{customer.email}</p>
+                  <p className="py-3 text-right">{customer.joinDate}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

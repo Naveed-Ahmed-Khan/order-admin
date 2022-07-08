@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
-// import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const UsersTable = ({ rows }) => {
-  // const { users } = useStateContext();
-
+  const { customers } = useStateContext();
   const [filterValue, setFilterValue] = useState("");
+
+  console.log(customers);
+
   return (
     <div className="w-full sm:max-w-[720px] sm:mr-auto sm:ml-auto xl:mr-auto xl:ml-0">
       <div className="">
@@ -25,78 +27,25 @@ const UsersTable = ({ rows }) => {
               <h3 className="text-right">Join Date</h3>
             </div>
             <div className="h-[14.65rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
-              <div className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium">
-                <div className="flex items-center gap-2">
-                  <img className="object-contain h-8" src={profile} alt="" />
-                  <p className="py-3 text-left">Name</p>
-                </div>
-                <p className="py-3 text-center">Email</p>
-                <p className="py-3 text-right">Join Date</p>
-              </div>
+              {customers?.map((customer) => {
+                return (
+                  <div
+                    key={customer.id}
+                    className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium"
+                  >
+                    <div className="flex items-center gap-2">
+                      <img
+                        className="object-contain h-8"
+                        src={profile}
+                        alt=""
+                      />
+                      <p className="py-3 text-left">{customer.name}</p>
+                    </div>
+                    <p className="py-3 text-center">{customer.email}</p>
+                    <p className="py-3 text-right">{customer.joinDate}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
