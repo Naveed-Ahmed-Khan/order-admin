@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import balloon from "../assets/images/ballon.png";
+import { useStateContext } from "../contexts/ContextProvider";
 import Button from "./UI/Button";
-// import { useStateContext } from "../contexts/ContextProvider";
 
 const ItemCard = () => {
-  // const { users } = useStateContext();
-
+  const navigate = useNavigate();
+  const { locations, updateShowDetails } = useStateContext();
   const [filterValue, setFilterValue] = useState("");
   return (
     <div className="mx-auto max-w-[720px] px-0 xl:pl-8 ">
@@ -14,24 +15,39 @@ const ItemCard = () => {
           <h2 className="text-2xl text-[#494949] font-semibold leading-tight">
             Items
           </h2>
-          <div className="mt-6 sm:mt-0 text-end">
-            <p className="font-semibold text-[#494949]">See all</p>
+          <div
+            onClick={() => {
+              navigate("/dashboard/items");
+            }}
+            className="mt-6 sm:mt-0 text-end cursor-pointer"
+          >
+            <p className="font-bold text-[#494949]">See all</p>
           </div>
         </div>
-        <div className="sm:h-[19rem] w-full shadow-2xl rounded-3xl bg-white">
-          <div className="p-4 sm:p-6 sm:h-[21rem]">
+        <div className="w-full shadow-2xl rounded-3xl bg-white">
+          <div className="p-4 sm:p-6 sm:h-[18rem]">
             <div className="sm:flex justify-between gap-4">
-              <div
-                className="w-full sm:w-[20%] sm:grid gap-2 place-items-center flex sm:grid-cols-2
-              overflow-x-auto"
-              >
-                <img className="col-span-full" src={balloon} alt="" />
-                <img className="" src={balloon} alt="" />
-                <img className="" src={balloon} alt="" />
+              <div className="w-full sm:w-[30%] gap-2 flex flex-col justify-between">
+                <img
+                  className="object-cover h-40 rounded-3xl"
+                  src={balloon}
+                  alt=""
+                />
+                <div className="hidden sm:block text-sm text-white">
+                  <Button
+                    onClick={() => {
+                      navigate("/dashboard/items");
+                    }}
+                    fullWidth
+                    type={"button"}
+                  >
+                    Show more
+                  </Button>
+                </div>
               </div>
-              <div className="w-full sm:w-[80%] overflow-auto  space-y-4">
+              <div className="w-full sm:w-[70%] space-y-4">
                 <h5 className="text-lg font-medium text-[#464646] ">
-                  Hot Air Balloon Festival, Alsaka
+                  {locations[0].name}
                 </h5>
                 <div className="flex space-x-5">
                   <p className="flex gap-1 text-xs items-center text-[#909090]">
@@ -48,9 +64,9 @@ const ItemCard = () => {
                         />
                       </svg>
                     </span>
-                    Dec 21, 2021
+                    {locations[0].date.toDate().toDateString()}
                   </p>
-                  <p className="flex gap-1 text-xs items-center text-[#909090]">
+                  {/* <p className="flex gap-1 text-xs items-center text-[#909090]">
                     <span>
                       <svg
                         className="object-contain h-4"
@@ -81,7 +97,7 @@ const ItemCard = () => {
                       </svg>
                     </span>
                     Dec 21, 2021
-                  </p>
+                  </p> */}
                 </div>
                 <p className="text-xs text-[#585858] h-[6rem] overflow-auto scrollbar-thin scrollbar-thumb-gray-200">
                   A balloon release is a ceremonial event in which a number of
@@ -90,14 +106,26 @@ const ItemCard = () => {
                   create a photo opportunity, to raise awareness of a cause or
                   campaign, or as a competitive long-distance race.
                 </p>
-                <div className="flex w-full justify-end gap-5 mt-2 h-fit p-2">
-                  <div className="text-sm text-white">
-                    <Button fullWidth type={"button"}>
+                <div className="flex items-end justify-between mt-2">
+                  <div className="sm:hidden block text-sm text-white">
+                    <Button
+                      onClick={() => {
+                        navigate("/dashboard/items");
+                      }}
+                      fullWidth
+                      type={"button"}
+                    >
                       Show more
                     </Button>
                   </div>
-                  <div className="text-sm text-white">
-                    <Button fullWidth type={"button"}>
+                  <div className="ml-0 sm:ml-auto text-sm text-white">
+                    <Button
+                      onClick={() => {
+                        navigate("/dashboard/add-item");
+                      }}
+                      fullWidth
+                      type={"button"}
+                    >
                       Add Items
                     </Button>
                   </div>

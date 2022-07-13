@@ -10,22 +10,13 @@ import { getMessaging } from "firebase/messaging/sw";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-/* const firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyDa3Gyo9RYmrNtVlYVZwh_eTELEqv04tSM",
   authDomain: "logo-2d6da.firebaseapp.com",
   projectId: "logo-2d6da",
   storageBucket: "logo-2d6da.appspot.com",
   messagingSenderId: "73251661072",
   appId: "1:73251661072:web:8b20be6f91dd5328d33195",
-}; */
-const firebaseConfig = {
-  apiKey: "AIzaSyCKMAGEwxOzuyXkxgX63qt6jaZRUnACOSk",
-  authDomain: "logo-admin.firebaseapp.com",
-  projectId: "logo-admin",
-  storageBucket: "logo-admin.appspot.com",
-  messagingSenderId: "731314091598",
-  appId: "1:731314091598:web:a6512a140fa6dceab1b51f",
-  measurementId: "G-TD085HSF32",
 };
 
 // Initialize Firebase

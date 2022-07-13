@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import event from "../assets/images/event.png";
 import Button from "../components/UI/Button";
+import FormGroup from "../components/UI/FormGroup";
 import Input from "../components/UI/Input";
+import SelectGroup from "../components/UI/SelectGroup";
 import TextArea from "../components/UI/TextArea";
 
 export default function AddItem() {
+  const [selectedValue, setSelectedValue] = useState("event");
+
   return (
     <div className="pt-[5vh] md:mt-[12vh] w-full mx-auto max-w-6xl pb-8 px-5 sm:px-10 lg:px-16">
       <section className="flex flex-col xl:flex-row items-center xl:items-start gap-12 ">
@@ -26,15 +30,52 @@ export default function AddItem() {
           </div>
         </div>
         <div className="w-full max-w-lg flex flex-col gap-7">
-          <Input placeholder="Event Name" />
-          <Input placeholder="Address" />
-          <Input placeholder="City" />
-          <Input placeholder="Country" />
-          <div className="flex gap-4">
-            <Input placeholder="Date" />
-            <Input placeholder="Time" />
+          {/* <iframe
+            title="googleMap"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26567.343054172172!2d72.8530944!3d33.659289600000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m3!3e0!4m0!4m0!5e0!3m2!1sen!2s!4v1657751752176!5m2!1sen!2s"
+            width="600"
+            height="450"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe> */}
+          <div
+            className="flex w-fit text-primary-500 text-base xl:text-lg text-opacity-60 bg-[#E6EBFF] rounded-lg 
+              shadow-xl  transition-all duration-300 overflow-clip"
+          >
+            <button
+              className={`${
+                selectedValue === "event"
+                  ? "bg-primary-400 bg-opacity-90 text-white"
+                  : "bg-[#E6EBFF] text-primary-500"
+              } px-4 py-2 hover:bg-primary-500 hover:text-white transition-all duration-300`}
+              onClick={() => setSelectedValue("event")}
+            >
+              Event
+            </button>
+            <button
+              className={`${
+                selectedValue === "place"
+                  ? "bg-primary-400 bg-opacity-90 text-white"
+                  : "bg-[#E6EBFF] text-primary-500"
+              } px-4 py-2 hover:bg-primary-500 hover:text-white transition-all duration-300`}
+              onClick={() => setSelectedValue("place")}
+            >
+              Place
+            </button>
           </div>
-
+          <Input placeholder="Event Name" />
+          {selectedValue === "event" && (
+            <div className="flex gap-4">
+              <Input placeholder="Date" />
+              <Input placeholder="Time" />
+            </div>
+          )}
+          <Input placeholder="Address" />
+          <div className="flex gap-4">
+            <Input placeholder="City" />
+            <Input placeholder="Country" />
+          </div>
           <TextArea rows={5} placeholder="Description" />
           <Button>
             <p className="text-white text-xl">Add</p>

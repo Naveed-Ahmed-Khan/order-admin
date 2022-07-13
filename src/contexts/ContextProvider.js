@@ -1,6 +1,7 @@
 // import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
+import { useAuth } from "./AuthContext";
 /* import { useCollectionData } from "react-firebase-hooks/firestore";
 import { db } from "../api/firebase-config";
 import useAppointments from "../hooks/useAppointments";
@@ -9,12 +10,11 @@ import useFetch from "../hooks/useFetch"; */
 const StateContext = createContext();
 
 export const ContextProvider = ({ children }) => {
+  const { currentUser } = useAuth();
   const [check, setCheck] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { data: customersData } = useFetch("customers", check);
-  const { data: businessesData } = useFetch("businesses", check);
-  const { data: eventsData } = useFetch("events", check);
-  const { data: locationsData } = useFetch("locations", check);
+  const { data: usersData } = useFetch("users", check);
+  const { data: placesData } = useFetch("places", check);
 
   const [showDetails, setShowDetails] = useState(null);
   const [customers, setCustomers] = useState([]);
@@ -23,18 +23,32 @@ export const ContextProvider = ({ children }) => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-    const initialize = () => {
-      // setLoading(true)
-      setCustomers(customersData);
-      setBusinesses(businessesData);
-      setLocations(locationsData);
-      setEvents(eventsData);
-      // setLoading(false);
+    const filterUsers = () => {
+      setCustomers(usersData.filter((user) => user.type === "customer"));
     };
-    initialize();
-  }, [customersData, businessesData, locationsData, eventsData]);
+    const filterBusinesses = () => {
+      setBusinesses(usersData.filter((user) => user.type === "business"));
+    };
 
-  console.log(customers);
+    filterUsers();
+    filterBusinesses();
+  }, [usersData]);
+
+  useEffect(() => {
+    const setPlacesData = () => {
+      if (currentUser.email === "admin@gmail.com") {
+        setLocations(placesData);
+      } else {
+        setLocations(
+          placesData.filter((place) => place.businessId === currentUser.uid)
+        );
+      }
+    };
+
+    setPlacesData();
+  }, [currentUser.email, currentUser.uid, placesData]);
+
+  console.log(locations);
 
   const updateCheck = () => {
     setCheck(!check);
@@ -43,7 +57,9 @@ export const ContextProvider = ({ children }) => {
     setShowDetails(value);
   };
 
-  // console.log(customers);
+  console.log(customers);
+  console.log(businesses);
+  console.log(locations);
 
   /* const { data: usersData } = useFetch("Users", check);
   const { data: availabilityData } = useFetch("weekstatus", check);

@@ -25,7 +25,7 @@ const DetailsSidebar = (props) => {
       >
         <div className="h-screen p-6 flex flex-col justify-between gap-6">
           <section>
-            <div className="mb-0 sm:mb-8 flex justify-end">
+            <div className="mb-0 sm:mb-5 flex justify-end">
               <svg
                 onClick={() => {
                   updateShowDetails(null);
@@ -49,26 +49,49 @@ const DetailsSidebar = (props) => {
                 <h2 className="text-2xl text-primary-500 font-semibold leading-tight">
                   {showDetails?.name}
                 </h2>
-                <div className="">
+                {/* <div className="">
                   {showDetails?.date && (
                     <p className="text-black">
                       {showDetails?.date.toDate().toDateString() || ""}
                     </p>
                   )}
-                </div>
+                </div> */}
               </div>
-              <div className="mb-6 h-56 rounded-xl overflow-clip">
+              <div className=" mb-6 h-56 rounded-xl overflow-clip">
                 <img
                   className="object-cover h-full w-full"
                   src={showDetails?.image}
                   alt=""
                 />
               </div>
+              <div className="-mt-3 mb-1 flex gap-1 text-black opacity-50">
+                {showDetails?.date && (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <p className="text-xs">
+                      {showDetails?.date.toDate().toDateString() || ""}
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
 
             <div className="h-[35vh] overflow-auto scrollbar-thin scrollbar-thumb-transparent">
               <p className="text-black opacity-50 text-sm">
-                {showDetails?.desc}
+                {showDetails?.description}
               </p>
             </div>
           </section>

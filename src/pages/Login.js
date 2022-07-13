@@ -2,6 +2,8 @@ import Backgroundlogin from "../components/UI/Backgroundlogin";
 import Button from "../components/UI/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useStateContext } from "../contexts/ContextProvider";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,20 +12,27 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  /*const { setCurrentUser } = useStateContext();
-  const { login } = useAuth(); */
+  const { login } = useAuth();
 
-  /* const signIn = async (email, password) => {
+  const signIn = async (email, password) => {
     try {
       setErrorMessage("");
-      await login(email, password);
+      const { user } = await login(email, password);
       console.log(user);
-      navigate("/home");
+      if (user.email === "admin@gmail.com") {
+        navigate("/home");
+      } else if (user && email.length !== 0 && password.length !== 0) {
+        navigate("/dashboard/home");
+      } /* else if (email.includes("admin")) {
+        navigate("/dashboard/home");
+      } else {
+        setErrorMessage("Invalid Email");
+      } */
     } catch (error) {
       console.log(error);
       setErrorMessage(error.message);
     }
-  }; */
+  };
   /* const login = async (email, password) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
@@ -52,7 +61,7 @@ const Login = () => {
         </div>
         <div className="xl:w-2/5 space-y-5">
           <div className="mt-4 -mb-4 text-lg text-center text-red-500 transition-all duration-500 scale-100">
-            {/* {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>} */}
+            {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>}
           </div>
           <div className="flex justify-center space-x-6">
             <p className="text-primary-500 text-base xl:text-lg underline underline-offset-2 font-rublik font-medium cursor-pointer">
@@ -84,7 +93,8 @@ const Login = () => {
             </svg>
 
             <input
-              autocomplete="off"
+              required
+              autoComplete="on"
               className={`w-full text-primary-500 text-base xl:text-lg text-opacity-60 bg-[#E6EBFF] border-2 border-[#E6EBFF] rounded-2xl outline-none ring-0 
               placeholder-primary-500 placeholder-opacity-40 placeholder:font-rublik placeholder:text-base xl:placeholder:text-lg
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
@@ -126,12 +136,13 @@ const Login = () => {
               <path
                 d="M12.5 0C6.81818 0 1.96591 3.732 0 9C1.96591 14.268 6.81818 18 12.5 18C18.1875 18 23.0341 14.268 25 9C23.0341 3.732 18.1875 0 12.5 0ZM12.5 15C9.36364 15 6.81818 12.312 6.81818 9C6.81818 5.688 9.36364 3 12.5 3C15.6364 3 18.1818 5.688 18.1818 9C18.1818 12.312 15.6364 15 12.5 15ZM12.5 5.4C10.6193 5.4 9.09091 7.014 9.09091 9C9.09091 10.986 10.6193 12.6 12.5 12.6C14.3807 12.6 15.9091 10.986 15.9091 9C15.9091 7.014 14.3807 5.4 12.5 5.4Z"
                 fill="#013B8D"
-                fill-opacity="0.45"
+                fillOpacity="0.45"
               />
             </svg>
 
             <input
-              autocomplete="off"
+              required
+              autoComplete="on"
               className={`w-full text-primary-500 text-base xl:text-lg text-opacity-60 bg-[#E6EBFF] border-2 border-[#E6EBFF] rounded-2xl outline-none ring-0 
               placeholder-primary-500 placeholder-opacity-40 placeholder:font-rublik placeholder:text-base xl:placeholder:text-lg
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
@@ -147,14 +158,7 @@ const Login = () => {
           <div className="mx-4 xl:mx-16 flex flex-col items-center pt-6 xl:pt-8">
             <Button
               onClick={() => {
-                // signIn(email, password);
-                if (email.includes("business")) {
-                  navigate("/dashboard/home");
-                } else if (email.includes("admin")) {
-                  navigate("/home");
-                } else {
-                  setErrorMessage("Invalid Email");
-                }
+                signIn(email, password);
               }}
               fullWidth
               type={"button"}

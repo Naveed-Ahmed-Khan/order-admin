@@ -1,4 +1,4 @@
-/* import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
@@ -8,7 +8,7 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../api/firebase-config";
+import { auth } from "../firebase-config";
 
 const AuthContext = React.createContext();
 
@@ -74,4 +74,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
- */
