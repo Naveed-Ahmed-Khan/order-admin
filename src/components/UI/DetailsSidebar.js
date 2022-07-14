@@ -1,14 +1,20 @@
 // import { onAuthStateChanged, signOut } from "firebase/auth";
 
 // import { auth } from "../api/firebase-config";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Backdrop from "./Backdrop";
 import skardu from "../../assets/images/skardu.png";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { useAuth } from "../../contexts/AuthContext";
+import { collection, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 const DetailsSidebar = (props) => {
   const location = useLocation();
-  const { showDetails, updateShowDetails } = useStateContext();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const { showDetails, updateShowDetails, updateSelectedPlace, updateCheck } =
+    useStateContext();
   console.log(showDetails);
 
   return (
@@ -97,7 +103,19 @@ const DetailsSidebar = (props) => {
           </section>
           <section>
             <div className="flex gap-6 mb-10">
-              <button className="flex">
+              <button
+                onClick={() => {
+                  updateSelectedPlace(showDetails);
+                  if (currentUser.email === "admin@gmail.com") {
+                    navigate(`/edit/${showDetails.id}`);
+                    updateShowDetails(null);
+                  } else {
+                    navigate(`/dashboard/edit/${showDetails.id}`);
+                    updateShowDetails(null);
+                  }
+                }}
+                className="flex"
+              >
                 <svg
                   width="23"
                   height="23"
@@ -113,7 +131,20 @@ const DetailsSidebar = (props) => {
 
                 <p className="pl-2 text-primary-500 font medium">Edit</p>
               </button>
-              <button className="flex">
+              <button
+                onClick={async () => {
+                  try {
+                    await deleteDoc(
+                      doc(collection(db, "places"), showDetails.id)
+                    );
+                    updateCheck((prev) => !prev);
+                    updateShowDetails(null);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+                className="flex"
+              >
                 <svg
                   width="17"
                   height="21"
@@ -149,9 +180,8 @@ const DetailsSidebar = (props) => {
                   fill="#F05542"
                 />
               </svg>
-
               <p className="text-white text-lg font font-semibold">
-                33K Heart Reacts
+                {showDetails?.likedby?.length} Heart Reacts
               </p>
             </div>
           </section>

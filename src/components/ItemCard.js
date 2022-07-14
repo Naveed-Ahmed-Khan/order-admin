@@ -36,7 +36,7 @@ const ItemCard = () => {
               <div className="w-full sm:w-[30%] gap-2 flex flex-col justify-between">
                 <img
                   className="object-cover h-40 rounded-3xl"
-                  src={locations[0].image}
+                  src={locations[0]?.image}
                   alt=""
                 />
                 <div className="hidden sm:block text-sm text-white">
@@ -57,7 +57,7 @@ const ItemCard = () => {
               </div>
               <div className="w-full sm:w-[70%] space-y-4">
                 <h5 className="text-lg font-medium text-[#464646] ">
-                  {locations[0].name}
+                  {locations[0]?.name}
                 </h5>
                 <div className="flex space-x-5">
                   <p className="flex gap-1 text-xs items-center text-[#909090]">
@@ -74,7 +74,7 @@ const ItemCard = () => {
                         />
                       </svg>
                     </span>
-                    {locations[0].date.toDate().toDateString()}
+                    {locations[0]?.date.toDate().toDateString()}
                   </p>
                   {/* <p className="flex gap-1 text-xs items-center text-[#909090]">
                     <span>
@@ -110,7 +110,7 @@ const ItemCard = () => {
                   </p> */}
                 </div>
                 <p className="text-xs text-[#585858] h-[6rem] overflow-auto scrollbar-thin scrollbar-thumb-gray-200">
-                  {locations[0].description}
+                  {locations[0]?.description}
                 </p>
                 <div className="flex items-end justify-between mt-2">
                   <div className="sm:hidden block text-sm text-white">

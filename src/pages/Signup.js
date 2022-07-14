@@ -11,7 +11,6 @@ const Signup = () => {
 
   const { setCurrentUser } = useStateContext();
   const { login } = useAuth(); */
-
   /* const signIn = async (email, password) => {
     try {
       setErrorMessage("");
@@ -54,20 +53,20 @@ const Signup = () => {
           <div className="mt-4 -mb-4 text-lg text-center text-red-500 transition-all duration-500 scale-100">
             {/* {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>} */}
           </div>
-          <div className="flex justify-center space-x-6">
+          {/* <div className="flex justify-center space-x-6">
             <p className="text-primary-500 opacity-40 hover:opacity-100 text-base xl:text-lg hover:underline hover:underline-offset-2 font-rublik font-medium transition-all duration-300 cursor-pointer">
               Login
             </p>
             <p className="text-primary-500 text-base xl:text-lg underline underline-offset-2 font-rublik font-medium cursor-pointer">
               Signup
             </p>
-          </div>
+          </div> */}
           <div className="space-y-1 xl:pb-4">
             <p className="text-center text-primary-500 text-xl sm:text-2xl xl:text-3xl font-rublik font-bold">
-              Welcome Back
+              Create New Account
             </p>
-            <p className="text-center font-rublik font-medium text-sm sm:text-base xl:text-lg text-[#717171]">
-              Login to continue
+            <p className="text-center font-rublik text-sm sm:text-base xl:text-lg text-[#717171]">
+              Create new account to continue
             </p>
           </div>
           <div className="mx-4 xl:mx-16 relative flex flex-col items-center">
@@ -207,7 +206,7 @@ const Signup = () => {
               fullWidth
               type={"button"}
             >
-              <p className="text-white text-[1em] xl:text-[1.2em]">Login</p>
+              <p className="text-white text-[1em] xl:text-[1.2em]">Signup</p>
             </Button>
           </div>
           <div className="flex items-center justify-center gap-4">

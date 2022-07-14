@@ -27,9 +27,9 @@ export default function AllGalleries() {
             <div className="flex gap-8 overflow-x-auto scrollbar-thin scrollbar-transparent">
               {locations.length > 0 ? (
                 locations?.map((location) => {
-                  return (
-                    <div key={location.id}>
-                      {location.type !== "event" && (
+                  if (location.type !== "event") {
+                    return (
+                      <div key={location.id}>
                         <div
                           onClick={() => {
                             updateShowDetails(location);
@@ -46,9 +46,11 @@ export default function AllGalleries() {
                             {/* , {location.country} */}
                           </p>
                         </div>
-                      )}
-                    </div>
-                  );
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
                 })
               ) : (
                 <div className="h-60 w-full flex items-center justify-center text-2xl text-primary-500">
@@ -73,9 +75,9 @@ export default function AllGalleries() {
             <div className="flex gap-8 overflow-x-auto scrollbar-thin scrollbar-transparent">
               {locations.length > 0 ? (
                 locations?.map((event) => {
-                  return (
-                    <div key={event.id}>
-                      {event.type === "event" && (
+                  if (event.type === "event") {
+                    return (
+                      <div key={event.id}>
                         <div
                           onClick={() => {
                             updateShowDetails(event);
@@ -92,9 +94,11 @@ export default function AllGalleries() {
                             {/* , {event.country} */}
                           </p>
                         </div>
-                      )}
-                    </div>
-                  );
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
                 })
               ) : (
                 <div className="h-60 w-full flex items-center justify-center text-2xl text-primary-500">

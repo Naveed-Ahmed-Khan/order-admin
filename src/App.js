@@ -5,6 +5,7 @@ import Business from "./pages/Business";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import BusinessHome from "./pages/BusinessHome";
 import Dashboard from "./pages/Dashboard";
+import EditItem from "./pages/EditItem";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
@@ -25,11 +26,13 @@ function App() {
         <Route path="/business" element={<Business />} />
         <Route path="/items" element={<AllGalleries />} />
         <Route path="/add-item" element={<AddItem />} />
+        <Route path="/edit/:item" element={<EditItem />} />
       </Route>
       <Route path="/dashboard" element={<BusinessDashboard />}>
         <Route path="/dashboard/home" element={<BusinessHome />} />
         <Route path="/dashboard/items" element={<AllGalleries />} />
         <Route path="/dashboard/add-item" element={<AddItem />} />
+        <Route path="/dashboard/edit/:item" element={<EditItem />} />
       </Route>
     </Routes>
   );

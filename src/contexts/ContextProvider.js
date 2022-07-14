@@ -17,6 +17,7 @@ export const ContextProvider = ({ children }) => {
   const { data: placesData } = useFetch("places", check);
 
   const [showDetails, setShowDetails] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
   const [customers, setCustomers] = useState([]);
   const [businesses, setBusinesses] = useState([]);
   const [events, setEvents] = useState([]);
@@ -55,6 +56,9 @@ export const ContextProvider = ({ children }) => {
   };
   const updateShowDetails = (value) => {
     setShowDetails(value);
+  };
+  const updateSelectedPlace = (value) => {
+    setSelectedPlace(value);
   };
 
   console.log(customers);
@@ -170,6 +174,8 @@ export const ContextProvider = ({ children }) => {
     locations,
     events,
     updateCheck,
+    selectedPlace,
+    updateSelectedPlace,
 
     /* currentUser,
     users,

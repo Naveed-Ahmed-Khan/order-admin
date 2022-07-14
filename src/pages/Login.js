@@ -52,10 +52,10 @@ const Login = () => {
       <Backgroundlogin />
       <div className="container md:max-w-xl xl:max-w-screen-xl mx-auto xl:flex pt-[10vh] sm:pt-[15vh] xl:pt-[20vh]">
         <div className="xl:w-3/5 xl:px-32 pb-4 xl:pb-0">
-          <h1 className="text-center xl:text-left text-2xl sm:text-4xl xl:text-6xl font-rublik font-bold text-primary-500">
+          <h1 className="px-4 sm:px-0 text-center xl:text-left text-2xl sm:text-4xl xl:text-6xl font-rublik font-bold text-primary-500">
             Grow your business today!
           </h1>
-          <p className="text-center pt-2 xl:pt-8 xl:text-left text-sm sm:text-base xl:text-lg font-rublik font-medium text-[#717171]">
+          <p className="px-4 sm:px-0 text-center pt-2 xl:pt-8 xl:text-left text-sm sm:text-base xl:text-lg font-rublik font-medium text-[#717171]">
             Add events, visitors, restaurants and let visitors know about you.
           </p>
         </div>
@@ -63,19 +63,19 @@ const Login = () => {
           <div className="mt-4 -mb-4 text-lg text-center text-red-500 transition-all duration-500 scale-100">
             {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>}
           </div>
-          <div className="flex justify-center space-x-6">
+          {/* <div className="flex justify-center space-x-6">
             <p className="text-primary-500 text-base xl:text-lg underline underline-offset-2 font-rublik font-medium cursor-pointer">
               Login
             </p>
             <p className="text-primary-500 opacity-40 hover:opacity-100 text-base xl:text-lg hover:underline hover:underline-offset-2 font-rublik font-medium transition-all duration-300 cursor-pointer">
               Signup
             </p>
-          </div>
+          </div> */}
           <div className="space-y-1 xl:pb-4">
             <p className="text-center text-primary-500 text-xl sm:text-2xl xl:text-3xl font-rublik font-bold">
               Welcome Back
             </p>
-            <p className="text-center font-rublik font-medium text-sm sm:text-base xl:text-lg text-[#717171]">
+            <p className="text-center font-rublik text-sm sm:text-base xl:text-lg text-[#717171]">
               Login to continue
             </p>
           </div>
@@ -94,7 +94,7 @@ const Login = () => {
 
             <input
               required
-              autoComplete="on"
+              autoComplete="off"
               className={`w-full text-primary-500 text-base xl:text-lg text-opacity-60 bg-[#E6EBFF] border-2 border-[#E6EBFF] rounded-2xl outline-none ring-0 
               placeholder-primary-500 placeholder-opacity-40 placeholder:font-rublik placeholder:text-base xl:placeholder:text-lg
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
@@ -142,11 +142,12 @@ const Login = () => {
 
             <input
               required
-              autoComplete="on"
+              autoComplete="off"
               className={`w-full text-primary-500 text-base xl:text-lg text-opacity-60 bg-[#E6EBFF] border-2 border-[#E6EBFF] rounded-2xl outline-none ring-0 
               placeholder-primary-500 placeholder-opacity-40 placeholder:font-rublik placeholder:text-base xl:placeholder:text-lg
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
+              type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => {
