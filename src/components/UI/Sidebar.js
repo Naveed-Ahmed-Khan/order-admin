@@ -2,10 +2,12 @@
 
 // import { auth } from "../api/firebase-config";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import Backdrop from "./Backdrop";
 
 const Sidebar = (props) => {
   const location = useLocation();
+  const { logout } = useAuth();
 
   return (
     <>
@@ -289,6 +291,7 @@ const Sidebar = (props) => {
                               ? "text-white"
                               : "text-[#45E3FF]"
                           }   mx-auto hover:text-white transition-all duration-300`}
+                          // onClick={() => logout()}
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

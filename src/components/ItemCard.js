@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import balloon from "../assets/images/ballon.png";
+import { useAuth } from "../contexts/AuthContext";
 import { useStateContext } from "../contexts/ContextProvider";
 import Button from "./UI/Button";
 
 const ItemCard = () => {
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const { locations, updateShowDetails } = useStateContext();
   const [filterValue, setFilterValue] = useState("");
@@ -17,11 +19,15 @@ const ItemCard = () => {
           </h2>
           <div
             onClick={() => {
-              navigate("/dashboard/items");
+              if (currentUser.email === "admin@gmail.com") {
+                navigate("/items");
+              } else {
+                navigate("/dashboard/items");
+              }
             }}
             className="mt-6 sm:mt-0 text-end cursor-pointer"
           >
-            <p className="font-bold text-[#494949]">See all</p>
+            <p className="font-semibold text-[#494949]">See all</p>
           </div>
         </div>
         <div className="w-full shadow-2xl rounded-3xl bg-white">
@@ -30,13 +36,17 @@ const ItemCard = () => {
               <div className="w-full sm:w-[30%] gap-2 flex flex-col justify-between">
                 <img
                   className="object-cover h-40 rounded-3xl"
-                  src={balloon}
+                  src={locations[0].image}
                   alt=""
                 />
                 <div className="hidden sm:block text-sm text-white">
                   <Button
                     onClick={() => {
-                      navigate("/dashboard/items");
+                      if (currentUser.email === "admin@gmail.com") {
+                        navigate("/items");
+                      } else {
+                        navigate("/dashboard/items");
+                      }
                     }}
                     fullWidth
                     type={"button"}
@@ -100,17 +110,17 @@ const ItemCard = () => {
                   </p> */}
                 </div>
                 <p className="text-xs text-[#585858] h-[6rem] overflow-auto scrollbar-thin scrollbar-thumb-gray-200">
-                  A balloon release is a ceremonial event in which a number of
-                  hydrogen- or helium-filled balloons are unleashed into the
-                  sky. Balloon releases can be done as a prayer ceremony, to
-                  create a photo opportunity, to raise awareness of a cause or
-                  campaign, or as a competitive long-distance race.
+                  {locations[0].description}
                 </p>
                 <div className="flex items-end justify-between mt-2">
                   <div className="sm:hidden block text-sm text-white">
                     <Button
                       onClick={() => {
-                        navigate("/dashboard/items");
+                        if (currentUser.email === "admin@gmail.com") {
+                          navigate("/items");
+                        } else {
+                          navigate("/dashboard/items");
+                        }
                       }}
                       fullWidth
                       type={"button"}
@@ -121,7 +131,11 @@ const ItemCard = () => {
                   <div className="ml-0 sm:ml-auto text-sm text-white">
                     <Button
                       onClick={() => {
-                        navigate("/dashboard/add-item");
+                        if (currentUser.email === "admin@gmail.com") {
+                          navigate("/add-item");
+                        } else {
+                          navigate("/dashboard/add-item");
+                        }
                       }}
                       fullWidth
                       type={"button"}

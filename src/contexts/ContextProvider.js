@@ -36,17 +36,17 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     const setPlacesData = () => {
-      if (currentUser.email === "admin@gmail.com") {
+      if (currentUser?.email === "admin@gmail.com") {
         setLocations(placesData);
       } else {
         setLocations(
-          placesData.filter((place) => place.businessId === currentUser.uid)
+          placesData.filter((place) => place.businessId === currentUser?.uid)
         );
       }
     };
 
     setPlacesData();
-  }, [currentUser.email, currentUser.uid, placesData]);
+  }, [currentUser?.email, currentUser?.uid, placesData]);
 
   console.log(locations);
 

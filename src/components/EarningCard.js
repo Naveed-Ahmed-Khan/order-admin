@@ -15,9 +15,9 @@ export default function EarningCard({ rows }) {
           <h2 className="text-2xl text-[#494949] font-semibold leading-tight">
             Earnings
           </h2>
-          <div className="mt-6 sm:mt-0 text-end">
+          {/* <div className="mt-6 sm:mt-0 text-end">
             <p className="font-semibold text-[#494949]">See all</p>
-          </div>
+          </div> */}
         </div>
         <div className="sm:h-[19rem] flex flex-col w-full shadow-2xl rounded-3xl bg-[#013b8d]">
           <div className=" mb-6 pl-4 pt-2">

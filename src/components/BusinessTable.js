@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
 import { useStateContext } from "../contexts/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 const BusinessTable = ({ rows }) => {
+  const navigate = useNavigate();
   const { businesses } = useStateContext();
-
   const [filterValue, setFilterValue] = useState("");
+
   return (
     <div className="w-full sm:max-w-[720px] sm:mr-auto sm:ml-auto xl:ml-auto xl:mr-0 ">
       <div className="">
@@ -13,7 +15,12 @@ const BusinessTable = ({ rows }) => {
           <h2 className="text-2xl text-[#494949] font-semibold leading-tight">
             Businesses
           </h2>
-          <div className="mt-6 sm:mt-0 text-end">
+          <div
+            onClick={() => {
+              navigate("/business");
+            }}
+            className="mt-6 sm:mt-0 text-end cursor-pointer"
+          >
             <p className="font-semibold text-[#494949]">See all</p>
           </div>
         </div>

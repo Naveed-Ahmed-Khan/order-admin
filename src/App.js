@@ -24,6 +24,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/business" element={<Business />} />
         <Route path="/items" element={<AllGalleries />} />
+        <Route path="/add-item" element={<AddItem />} />
       </Route>
       <Route path="/dashboard" element={<BusinessDashboard />}>
         <Route path="/dashboard/home" element={<BusinessHome />} />
