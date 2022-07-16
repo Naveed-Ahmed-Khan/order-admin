@@ -1,16 +1,23 @@
 import Backgroundlogin from "../components/UI/Backgroundlogin";
 import Button from "../components/UI/Button";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase-config";
 
 const Signup = () => {
+  const { signup } = useAuth();
   const navigate = useNavigate();
-  /*const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { setCurrentUser } = useStateContext();
-  const { login } = useAuth(); */
+  // const { setCurrentUser } = useStateContext();
+  // const { login } = useAuth();
   /* const signIn = async (email, password) => {
     try {
       setErrorMessage("");
@@ -36,6 +43,26 @@ const Signup = () => {
     }
   }; */
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      setErrorMessage("");
+      await signup(email, password);
+      const userData = {
+        name: name,
+        phone: phone,
+        email: email,
+        password: password,
+        joinDate: serverTimestamp(),
+      };
+      await addDoc(collection(db, "customers"), userData);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      setErrorMessage(error.message);
+    }
+  };
+
   return (
     <div className="">
       <Backgroundlogin />
@@ -49,7 +76,10 @@ const Signup = () => {
           </p>
         </div>
 
-        <div className="xl:w-2/5 space-y-5  xl:-mt-12">
+        <form
+          onSubmit={submitHandler}
+          className="xl:w-2/5 space-y-5  xl:-mt-12"
+        >
           <div className="mt-4 -mb-4 text-lg text-center text-red-500 transition-all duration-500 scale-100">
             {/* {errorMessage.length > 0 && <p>{"Invalid Credentials"}</p>} */}
           </div>
@@ -89,11 +119,11 @@ const Signup = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Username"
-              /* value={email}
+              value={name}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setName(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 relative flex flex-col items-center">
@@ -116,11 +146,11 @@ const Signup = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Email"
-              /* value={email}
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 relative flex flex-col items-center">
@@ -143,11 +173,11 @@ const Signup = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Phone"
-              /* value={email}
+              value={phone}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setPhone(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 relative flex flex-col items-center">
@@ -190,21 +220,24 @@ const Signup = () => {
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
               placeholder="Password"
-              /* value={email}
+              value={password}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setPassword(e.target.value);
                 setErrorMessage("");
-              }} */
+              }}
             />
           </div>
           <div className="mx-4 xl:mx-16 flex flex-col items-center pt-6 xl:pt-8">
             <Button
-              onClick={() => {
+              /* onClick={async () => {
+                await signup(email, password);
+                navigate("/login");
+                addDoc(collection(db, "users"), { name });
                 // signIn(email, password);
                 // navigate("/dashboard/home");
-              }}
+              }} */
               fullWidth
-              type={"button"}
+              type={"submit"}
             >
               <p className="text-white text-[1em] xl:text-[1.2em]">Signup</p>
             </Button>
@@ -220,7 +253,7 @@ const Signup = () => {
               Login
             </Link>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
