@@ -32,7 +32,7 @@ const ItemCard = () => {
         </div>
 
         <div className="w-full shadow-2xl rounded-3xl bg-white">
-          {filterValue ? (
+          {locations.length > 0 ? (
             <div className="p-4 sm:p-6 sm:h-[18rem]">
               <div className="sm:flex justify-between gap-4">
                 <div className="w-full sm:w-[30%] gap-2 flex flex-col justify-between">

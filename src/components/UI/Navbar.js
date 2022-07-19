@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Search from "./Search";
 import pic from "../../assets/images/profile.png";
 
@@ -8,6 +8,7 @@ import pic from "../../assets/images/profile.png";
 const Navbar = (props) => {
   // const { unReadMessages } = useStateContext();
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -85,6 +86,7 @@ const Navbar = (props) => {
             className={`flex gap-4 items-center hover:opacity-100 mx-auto hover:text-primary transition-all duration-300`}
           >
             <svg
+              onClick={() => navigate("/subscription")}
               width="26"
               height="34"
               viewBox="0 0 26 34"

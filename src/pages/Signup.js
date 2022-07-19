@@ -3,7 +3,13 @@ import Button from "../components/UI/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase-config";
 
 const Signup = () => {
@@ -47,15 +53,19 @@ const Signup = () => {
     e.preventDefault();
     try {
       setErrorMessage("");
-      await signup(email, password);
+      const newUser = await signup(email, password);
+      console.log(newUser);
+
       const userData = {
         name: name,
         phone: phone,
         email: email,
-        password: password,
         joinDate: serverTimestamp(),
+        type: "business",
+        activeSubscription: null,
+        subscriptions: [],
       };
-      await addDoc(collection(db, "customers"), userData);
+      await setDoc(doc(collection(db, "users"), newUser?.user?.uid), userData);
       navigate("/login");
     } catch (error) {
       console.log(error);

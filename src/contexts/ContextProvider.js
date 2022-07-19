@@ -15,6 +15,7 @@ export const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { data: usersData } = useFetch("users", check);
   const { data: placesData } = useFetch("places", check);
+  const { data: subscriptionData } = useFetch("subscriptions", check);
 
   const [showDetails, setShowDetails] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -22,6 +23,7 @@ export const ContextProvider = ({ children }) => {
   const [businesses, setBusinesses] = useState([]);
   const [events, setEvents] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
     const filterUsers = () => {
@@ -30,10 +32,10 @@ export const ContextProvider = ({ children }) => {
     const filterBusinesses = () => {
       setBusinesses(usersData.filter((user) => user.type === "business"));
     };
-
+    setSubscriptions(subscriptionData);
     filterUsers();
     filterBusinesses();
-  }, [usersData]);
+  }, [usersData, subscriptionData]);
 
   useEffect(() => {
     const setPlacesData = () => {
@@ -167,6 +169,7 @@ export const ContextProvider = ({ children }) => {
 
   const exportValues = {
     loading,
+    subscriptions,
     showDetails,
     updateShowDetails,
     customers,

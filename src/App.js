@@ -9,7 +9,9 @@ import EditItem from "./pages/EditItem";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Login from "./pages/Login";
+import Payment from "./pages/Payment";
 import Signup from "./pages/Signup";
+import Subscription from "./pages/Subscription";
 import Users from "./pages/Users";
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
       <Route path="/" element={<Navigate replace to="/login" />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/subscription" element={<Subscription />} />
+      <Route path="/payment/:id" element={<Payment />} />
 
       <Route path="/" element={<Dashboard />}>
         <Route path="/home" element={<Home />} />
