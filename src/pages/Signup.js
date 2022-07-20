@@ -22,33 +22,6 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // const { setCurrentUser } = useStateContext();
-  // const { login } = useAuth();
-  /* const signIn = async (email, password) => {
-    try {
-      setErrorMessage("");
-      await login(email, password);
-      console.log(user);
-      navigate("/home");
-    } catch (error) {
-      console.log(error);
-      setErrorMessage(error.message);
-    }
-  }; */
-  /* const login = async (email, password) => {
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
-      setCurrentUser(user);
-      localStorage.setItem("isLoggedIn", true);
-      navigate("/home");
-    } catch (error) {
-      console.log(error.message);
-      setErrorMessage(error.message);
-      // alert("invalid");
-    }
-  }; */
-
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -62,8 +35,11 @@ const Signup = () => {
         email: email,
         joinDate: serverTimestamp(),
         type: "business",
+        businessId: newUser?.user?.uid,
         activeSubscription: null,
-        subscriptions: [],
+        allSubscriptions: [],
+        notifications: [],
+        isDisabled: false,
       };
       await setDoc(doc(collection(db, "users"), newUser?.user?.uid), userData);
       navigate("/login");

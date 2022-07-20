@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
 import { useStateContext } from "../contexts/ContextProvider";
 import { useNavigate } from "react-router-dom";
+import DropdownB from "./UI/DropdownB";
+import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase-config";
+import { async } from "@firebase/util";
 
 const BusinessTable = ({ rows }) => {
   const navigate = useNavigate();
-  const { businesses } = useStateContext();
-  const [filterValue, setFilterValue] = useState("");
+  const { businesses, updateCheck } = useStateContext();
+  const [disabled, setDisabled] = useState(false);
 
   return (
     <div className="w-full sm:max-w-[720px] sm:mr-auto sm:ml-auto xl:ml-auto xl:mr-0 ">
@@ -38,10 +42,20 @@ const BusinessTable = ({ rows }) => {
             </div>
             <div className="h-[14.65rem] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
               {businesses?.map((business) => {
+                let subscriptionRem = null;
+                if (business.activeSubscription) {
+                  subscriptionRem =
+                    business.activeSubscription.expirationDate
+                      .toDate()
+                      .getTime() - Date.now();
+                  console.log(new Date(subscriptionRem));
+                  subscriptionRem = new Date(subscriptionRem);
+                }
                 return (
                   <div
                     key={business.id}
-                    className="mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium"
+                    className={`mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium
+                    ${business.isDisabled ? "opacity-50" : "opacity-100"}`}
                   >
                     <div className="col-span-2 flex items-center gap-2">
                       <img
@@ -51,10 +65,59 @@ const BusinessTable = ({ rows }) => {
                       />
                       <p className="py-3 text-left">{business.name}</p>
                     </div>
-                    <p className="col-span-2 py-3 text-center">
-                      {business.subscription}
-                    </p>
-                    <p className="col-span-1  py-3 text-right">...</p>
+                    {subscriptionRem ? (
+                      <div className="col-span-2 flex items-center">
+                        <p className="ml-4 py-3 text-left ">
+                          {subscriptionRem.getDate()} days:{" "}
+                          {business.activeSubscription.name}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="col-span-2 flex items-center">
+                        <p className="ml-4 py-3 text-left">
+                          {"Not subscribed"}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-center flex-wrap gap-x-2 gap-y-1 py-1">
+                      <button
+                        onClick={async () => {
+                          if (business.isDisabled) {
+                            await updateDoc(
+                              doc(collection(db, "users"), business.id),
+                              {
+                                isDisabled: false,
+                              }
+                            );
+                            setDisabled(false);
+                          } else {
+                            await updateDoc(
+                              doc(collection(db, "users"), business.id),
+                              {
+                                isDisabled: true,
+                              }
+                            );
+                            setDisabled(true);
+                          }
+                          updateCheck();
+                        }}
+                        className="border border-white rounded-md px-2 py-1 bg-primary-500 hover:bg-primary-400"
+                      >
+                        {business.isDisabled ? "Enable" : "Disable"}
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await deleteDoc(
+                            doc(collection(db, "users"), business.id)
+                          );
+                          updateCheck();
+                        }}
+                        className="hover:underline hover:underline-offset-2"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 );
               })}

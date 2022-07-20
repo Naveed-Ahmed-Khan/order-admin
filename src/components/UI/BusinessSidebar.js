@@ -281,11 +281,11 @@ const BusinessSidebar = (props) => {
                   /* onClick={async () => {
                     await signOut(auth);
                   }} */
-                  to={"/dashboard/home"}
+                  to={"/subscription"}
                 >
                   <span
                     className={`${
-                      location.pathname === "/dashboard/home"
+                      location.pathname === "/subscription"
                         ? "text-white"
                         : "text-[#45E3FF]"
                     }  mx-auto hover:text-white transition-all duration-300`}

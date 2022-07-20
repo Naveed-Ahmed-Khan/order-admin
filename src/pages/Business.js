@@ -1,9 +1,11 @@
+import { collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import profile from "../assets/images/profile.png";
 import { useStateContext } from "../contexts/ContextProvider";
+import { db } from "../firebase-config";
 export default function Business({ rows }) {
-  const { businesses } = useStateContext();
-
+  const { businesses, updateCheck } = useStateContext();
+  const [disabled, setDisabled] = useState(false);
   const [filterValue, setFilterValue] = useState("");
   return (
     <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
@@ -59,10 +61,22 @@ export default function Business({ rows }) {
             </div>
             <div className="h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 ">
               {businesses.map((business) => {
+                let subscriptionRem = null;
+                if (business.activeSubscription) {
+                  subscriptionRem =
+                    business.activeSubscription.expirationDate
+                      .toDate()
+                      .getTime() - Date.now();
+                  console.log(new Date(subscriptionRem));
+                  subscriptionRem = new Date(subscriptionRem);
+                }
+                // console.log(subscriptionRem);
                 return (
                   <div
                     key={business.id}
-                    className="mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-5 text-base text-black font-medium"
+                    className={`mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-5 text-base text-black font-medium ${
+                      business.isDisabled ? "opacity-50" : "opacity-100"
+                    }`}
                   >
                     <div className="col-span-2 flex items-center gap-2">
                       <img
@@ -72,10 +86,55 @@ export default function Business({ rows }) {
                       />
                       <p className="py-3 text-left">{business.name}</p>
                     </div>
-                    <p className="col-span-2 ml-4 py-3 text-left">
-                      {business.subscription}
-                    </p>
-                    <p className="col-span-1  py-3 text-right">...</p>
+                    {subscriptionRem ? (
+                      <p className="col-span-2 ml-4 py-3 text-left">
+                        {subscriptionRem.getDate()} days:{" "}
+                        {business.activeSubscription.name}
+                      </p>
+                    ) : (
+                      <p className="col-span-2 ml-4 py-3 text-left">
+                        {"Not subscribed"}
+                      </p>
+                    )}
+
+                    <div className="flex items-center justify-center flex-wrap gap-x-2 gap-y-1 py-1">
+                      <button
+                        onClick={async () => {
+                          if (business.isDisabled) {
+                            await updateDoc(
+                              doc(collection(db, "users"), business.id),
+                              {
+                                isDisabled: false,
+                              }
+                            );
+                            setDisabled(false);
+                          } else {
+                            await updateDoc(
+                              doc(collection(db, "users"), business.id),
+                              {
+                                isDisabled: true,
+                              }
+                            );
+                            setDisabled(true);
+                          }
+                          updateCheck();
+                        }}
+                        className="border border-white text-white rounded-md px-2 py-1 bg-primary-500 hover:bg-primary-400"
+                      >
+                        {business.isDisabled ? "Enable" : "Disable"}
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await deleteDoc(
+                            doc(collection(db, "users"), business.id)
+                          );
+                          updateCheck();
+                        }}
+                        className="hover:underline hover:underline-offset-2 text-red-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 );
               })}

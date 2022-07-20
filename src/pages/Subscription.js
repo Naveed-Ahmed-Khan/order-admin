@@ -20,7 +20,7 @@ export default function Subscription() {
             return (
               <div
                 key={sub.id}
-                className="flex flex-col p-6 space-y-6 rounded-3xl shadow-2xl sm:p-8  bg-white"
+                className="flex flex-col p-6 space-y-6 rounded-3xl shadow-2xl sm:p-8 bg-white"
               >
                 <h3 className="text-6xl font-bold">
                   ${sub.price}

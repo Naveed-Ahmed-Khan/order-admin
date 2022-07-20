@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Children } from "react";
 
-export default function Select() {
+export default function Select({ children, placeholder }) {
   return (
     <div class="relative">
       <select
-        class="block caret-transparent appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        class="block caret-transparent appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         id="grid-state"
+        placeholder={placeholder}
       >
-        <option>Business</option>
-        <option>Monthly</option>
+        {children}
         {/* <option>Texas</option> */}
       </select>
       {/* <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

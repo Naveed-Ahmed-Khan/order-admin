@@ -31,9 +31,14 @@ export default function Chart() {
           <h2 className="text-2xl mb-4 text-[#494949] font-semibold leading-tight">
             Statistics
           </h2>
-          <div className="flex gap-2 w-full justify-center">
-            <Select />
-            <Select />
+          <div className="flex gap-2 w-full justify-center flex-wrap">
+            <Select placeholder={"Business"}>
+              <option>Business</option>
+            </Select>
+            <Select placeholder={"Monthly"}>
+              <option>Monthly</option>
+              <option>Annual</option>
+            </Select>
           </div>
         </div>
         <div className="-z-10 absolute w-full h-full flex items-center justify-center -mt-3">

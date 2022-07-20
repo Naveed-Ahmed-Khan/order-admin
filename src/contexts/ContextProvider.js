@@ -1,5 +1,8 @@
 // import { collection, doc, query, updateDoc, where } from "firebase/firestore";
+import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { db } from "../firebase-config";
 import useFetch from "../hooks/useFetch";
 import { useAuth } from "./AuthContext";
 /* import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -24,18 +27,58 @@ export const ContextProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
   const [locations, setLocations] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
+  const [selectedUserInfo, setSelectedUserInfo] = useState([]);
+  const [notification, setNotification] = useState(null);
+
+  /*   const q = query(
+    collection(db, "users"),
+    where("businessId", "==", currentUser.uid || "")
+  );
+  // const fetchedData = await getDocs(q);
+  const [selectedUserInfo] = useCollectionData(q, { idField: currentUser.uid });
+  console.log(selectedUserInfo); */
+
+  useEffect(() => {
+    const checkExpiration = async (activeSubscription) => {
+      const dateToday = new Date().getTime();
+      const expirationDate = activeSubscription?.expirationDate
+        .toDate()
+        .getTime();
+      if (expirationDate < dateToday) {
+        console.log("expired");
+        try {
+          await updateDoc(doc(collection(db, "users"), currentUser.uid), {
+            activeSubscription: null,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("not expired");
+        return;
+      }
+    };
+
+    if (selectedUserInfo[0]?.activeSubscription) {
+      checkExpiration(selectedUserInfo[0]?.activeSubscription);
+    }
+  }, [currentUser.uid, selectedUserInfo]);
 
   useEffect(() => {
     const filterUsers = () => {
       setCustomers(usersData.filter((user) => user.type === "customer"));
     };
     const filterBusinesses = () => {
-      setBusinesses(usersData.filter((user) => user.type === "business"));
+      let businesses = usersData.filter((user) => user.type === "business");
+      setBusinesses(businesses);
+      setSelectedUserInfo(
+        businesses.filter((business) => business.businessId === currentUser.uid)
+      );
     };
     setSubscriptions(subscriptionData);
     filterUsers();
     filterBusinesses();
-  }, [usersData, subscriptionData]);
+  }, [usersData, subscriptionData, currentUser.uid]);
 
   useEffect(() => {
     const setPlacesData = () => {
@@ -55,6 +98,9 @@ export const ContextProvider = ({ children }) => {
 
   const updateCheck = () => {
     setCheck(!check);
+  };
+  const updateNotification = (value) => {
+    setNotification(value);
   };
   const updateShowDetails = (value) => {
     setShowDetails(value);
@@ -178,7 +224,10 @@ export const ContextProvider = ({ children }) => {
     events,
     updateCheck,
     selectedPlace,
+    selectedUserInfo,
     updateSelectedPlace,
+    notification,
+    updateNotification,
 
     /* currentUser,
     users,

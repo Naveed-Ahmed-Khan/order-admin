@@ -18,9 +18,9 @@ import { db } from "../firebase-config";
 import { useStateContext } from "../contexts/ContextProvider";
 
 export default function CheckoutForm({ selectedPlanId }) {
-  const { currentUser } = useAuth();
-  const { subscriptions } = useStateContext();
-
+  // const { currentUser } = useAuth();
+  const { subscriptions, selectedUserInfo } = useStateContext();
+  console.log(selectedUserInfo);
   const selectedSubscription = subscriptions.filter(
     (sub) => sub.id === selectedPlanId
   );
@@ -81,7 +81,7 @@ export default function CheckoutForm({ selectedPlanId }) {
         redirect: "if_required",
         confirmParams: {
           // Make sure to change this to your payment completion page
-          receipt_email: currentUser?.email,
+          // receipt_email: selectedUserInfo[0]?.email,
           // return_url: "http://localhost:3000/dashboard/home",
         },
       });
@@ -92,11 +92,24 @@ export default function CheckoutForm({ selectedPlanId }) {
         activeSubscription: {
           ...selectedSubscription[0],
           subscriptionDate: Timestamp.fromDate(new Date()),
-          expiryDate: Timestamp.fromDate(new Date(Date.now() + 2629800000)), //1 month in milliseconds
+          expirationDate: Timestamp.fromDate(new Date(Date.now() + 2629800000)), //1 month in milliseconds
+          // expirationDate: Timestamp.fromDate(new Date(Date.now() + 30000)), //1 month in milliseconds
         },
+        notifications: [
+          ...selectedUserInfo[0].notifications,
+          {
+            title: "Success",
+            message: `You have subscribed to ${selectedSubscription[0].name} plan`,
+            id: Date.now(),
+          },
+        ],
+        unreadNotifications: selectedUserInfo[0].unreadNotifications + 1,
       };
+      await updateDoc(
+        doc(collection(db, "users"), selectedUserInfo[0].businessId),
+        data
+      );
 
-      await updateDoc(doc(collection(db, "users"), currentUser.uid), data);
       if (response.error !== undefined) {
         if (
           response.error.type === "card_error" ||
@@ -109,6 +122,7 @@ export default function CheckoutForm({ selectedPlanId }) {
       }
     } catch (error) {
       console.log(error);
+      setMessage("An unexpected error occurred.");
     }
     navigate("/dashboard/home");
 
@@ -120,6 +134,7 @@ export default function CheckoutForm({ selectedPlanId }) {
 
     setIsLoading(false);
   };
+  console.log(message);
 
   return (
     <form
