@@ -20,8 +20,8 @@
     "stripe": "^9.13.0",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "http://localhost:3000",
-  "proxy": "http://localhost:4242",
+  "homepage": "https://logo-2d6da.web.app",
+  "proxy": "https://logo-2d6da.web.app",
   "scripts": {
     "start": "react-scripts start",
     "server": "node server.js",

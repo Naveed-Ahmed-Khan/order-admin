@@ -18,7 +18,7 @@ export default function App() {
   const { id } = useParams();
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("/create-payment-intent", {
+    fetch("https://logo-backend-payment.herokuapp.com/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: [{ id: id, quantity: 1 }] }),

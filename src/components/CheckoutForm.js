@@ -19,7 +19,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 export default function CheckoutForm({ selectedPlanId }) {
   // const { currentUser } = useAuth();
-  const { subscriptions, selectedUserInfo } = useStateContext();
+  const { subscriptions, selectedUserInfo, updateCheck } = useStateContext();
   console.log(selectedUserInfo);
   const selectedSubscription = subscriptions.filter(
     (sub) => sub.id === selectedPlanId
@@ -109,6 +109,7 @@ export default function CheckoutForm({ selectedPlanId }) {
         doc(collection(db, "users"), selectedUserInfo[0].businessId),
         data
       );
+      updateCheck();
 
       if (response.error !== undefined) {
         if (

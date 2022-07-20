@@ -41,6 +41,59 @@ const Navbar = (props) => {
             />
           </svg>
         </button>
+        <div>
+          <div
+            className={`flex gap-4 items-center hover:opacity-100 mx-auto hover:text-primary transition-all duration-300 bg-primary-500`}
+          >
+            <Dropdown isNotification={isNotification}>
+              <div
+                onClick={async () => {
+                  setIsNotification((prev) => !prev);
+                }}
+                className="relative bg-primary-500"
+              >
+                <button
+                  onClick={async () => {
+                    if (selectedUserInfo[0]?.unreadNotifications > 0) {
+                      await updateDoc(
+                        doc(collection(db, "users"), selectedUserInfo[0].id),
+                        {
+                          unreadNotifications: 0,
+                        }
+                      );
+                      updateCheck((prev) => !prev);
+                    }
+                  }}
+                  className="bg-primary-500"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-8 w-8 text-white"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                  </svg>
+                </button>
+                {selectedUserInfo[0]?.unreadNotifications > 0 && (
+                  <div
+                    className="absolute w-5 h-5 bg-red-600 flex items-center justify-center rounded-full
+                -top-3 -right-3"
+                  >
+                    <p className="text-xs font-medium text-white">
+                      {selectedUserInfo[0]?.unreadNotifications}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </Dropdown>
+
+            <img className="object-contain h-12" src={pic} alt="" />
+            <div>
+              <p className="text-white text-lg font-medium">Beyond</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Desktop Navbar */}
@@ -79,17 +132,12 @@ const Navbar = (props) => {
                   }}
                 >
                   <svg
-                    width="26"
-                    height="34"
-                    viewBox="0 0 26 34"
-                    className="cursor-pointer"
-                    fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    class="h-10 w-10 text-primary-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
-                    <path
-                      d="M13.0021 34C14.8874 34 16.4298 32.4308 16.4298 30.5128H9.5744C9.5744 32.4308 11.0997 34 13.0021 34ZM23.2852 23.5385V14.8205C23.2852 9.46769 20.4745 4.98667 15.5729 3.80103V2.61538C15.5729 1.16821 14.4246 0 13.0021 0C11.5796 0 10.4313 1.16821 10.4313 2.61538V3.80103C5.51257 4.98667 2.71899 9.45026 2.71899 14.8205V23.5385L0.508119 25.7877C-0.571609 26.8862 0.182486 28.7692 1.70782 28.7692H24.2793C25.8046 28.7692 26.5758 26.8862 25.4961 25.7877L23.2852 23.5385Z"
-                      fill="#013B8D"
-                    />
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                   </svg>
                 </button>
                 {selectedUserInfo[0]?.unreadNotifications > 0 && (
@@ -105,7 +153,7 @@ const Navbar = (props) => {
               </div>
             </Dropdown>
 
-            <img className="object-contain h-12 ml-4" src={pic} alt="" />
+            <img className="object-contain h-12" src={pic} alt="" />
             <div>
               <p className="text-primary-500 text-lg font-medium">Beyond</p>
             </div>
