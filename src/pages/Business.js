@@ -8,7 +8,7 @@ export default function Business({ rows }) {
   const [disabled, setDisabled] = useState(false);
   const [filterValue, setFilterValue] = useState("");
   return (
-    <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
+    <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-6 sm:px-8 sm:mx-auto">
       <div className="">
         <div className="mb-4 sm:flex items-center justify-between w-full">
           <h2 className="text-2xl sm:text-3xl text-primary-500 font-semibold leading-tight">
@@ -74,7 +74,7 @@ export default function Business({ rows }) {
                 return (
                   <div
                     key={business.id}
-                    className={`mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-5 text-base text-black font-medium ${
+                    className={`text-sm sm:text-base mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-5 text-black font-medium ${
                       business.isDisabled ? "opacity-50" : "opacity-100"
                     }`}
                   >
@@ -119,7 +119,7 @@ export default function Business({ rows }) {
                           }
                           updateCheck();
                         }}
-                        className="border border-white text-white rounded-md px-2 py-1 bg-primary-500 hover:bg-primary-400"
+                        className="text-xs sm:text-sm border border-white text-white font-normal rounded-full sm:rounded-md px-2 py-1 bg-primary-500 hover:bg-primary-400"
                       >
                         {business.isDisabled ? "Enable" : "Disable"}
                       </button>
@@ -130,7 +130,7 @@ export default function Business({ rows }) {
                           );
                           updateCheck();
                         }}
-                        className="hover:underline hover:underline-offset-2 text-red-500"
+                        className="text-xs sm:text-sm hover:underline hover:underline-offset-2 text-red-500"
                       >
                         Delete
                       </button>

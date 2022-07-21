@@ -127,19 +127,21 @@ const Login = () => {
                 fill="#013B8D"
               />
             </svg>
-            <svg
-              className="object-contain h-4 absolute right-4 top-5"
-              viewBox="0 0 25 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.5 0C6.81818 0 1.96591 3.732 0 9C1.96591 14.268 6.81818 18 12.5 18C18.1875 18 23.0341 14.268 25 9C23.0341 3.732 18.1875 0 12.5 0ZM12.5 15C9.36364 15 6.81818 12.312 6.81818 9C6.81818 5.688 9.36364 3 12.5 3C15.6364 3 18.1818 5.688 18.1818 9C18.1818 12.312 15.6364 15 12.5 15ZM12.5 5.4C10.6193 5.4 9.09091 7.014 9.09091 9C9.09091 10.986 10.6193 12.6 12.5 12.6C14.3807 12.6 15.9091 10.986 15.9091 9C15.9091 7.014 14.3807 5.4 12.5 5.4Z"
-                fill="#013B8D"
-                fillOpacity="0.45"
-              />
-            </svg>
-
+            <button onClick={() => setShowPassword((prev) => !prev)}>
+              <svg
+                className={`${
+                  showPassword ? "opacity-60" : "opacity-100"
+                } object-contain h-4 absolute right-4 top-5`}
+                viewBox="0 0 25 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.5 0C6.81818 0 1.96591 3.732 0 9C1.96591 14.268 6.81818 18 12.5 18C18.1875 18 23.0341 14.268 25 9C23.0341 3.732 18.1875 0 12.5 0ZM12.5 15C9.36364 15 6.81818 12.312 6.81818 9C6.81818 5.688 9.36364 3 12.5 3C15.6364 3 18.1818 5.688 18.1818 9C18.1818 12.312 15.6364 15 12.5 15ZM12.5 5.4C10.6193 5.4 9.09091 7.014 9.09091 9C9.09091 10.986 10.6193 12.6 12.5 12.6C14.3807 12.6 15.9091 10.986 15.9091 9C15.9091 7.014 14.3807 5.4 12.5 5.4Z"
+                  fill="#013B8D"
+                />
+              </svg>
+            </button>
             <input
               required
               autoComplete="off"
@@ -147,7 +149,7 @@ const Login = () => {
               placeholder-primary-500 placeholder-opacity-40 placeholder:font-rublik placeholder:text-base xl:placeholder:text-lg
                 focus:border-2 focus:border-primary-500 focus:border-opacity-40 caret-primary-500 shadow-xl
                 py-3 px-12 transition-all duration-300`}
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => {

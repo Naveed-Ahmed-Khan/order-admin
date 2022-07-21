@@ -38,7 +38,7 @@ const UsersTable = ({ rows }) => {
                 return (
                   <div
                     key={customer.id}
-                    className="mb-1 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium"
+                    className="mb-2 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-sm text-black font-medium"
                   >
                     <div className="flex items-center gap-2">
                       <img

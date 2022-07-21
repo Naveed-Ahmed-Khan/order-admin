@@ -6,7 +6,7 @@ export default function Users({ rows }) {
 
   const [filterValue, setFilterValue] = useState("");
   return (
-    <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-4 sm:px-8 sm:mx-auto">
+    <div className="pt-[5vh] md:pt-[12vh] w-full h-screen sm:max-w-screen-lg px-6 sm:px-8 sm:mx-auto">
       <div className="mb-4 sm:flex items-center justify-between w-full">
         <h2 className="text-2xl sm:text-3xl text-primary-500 font-semibold leading-tight">
           Customers
@@ -57,7 +57,7 @@ export default function Users({ rows }) {
               return (
                 <div
                   key={customer.id}
-                  className="mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-base text-black font-medium"
+                  className="text-sm sm:text-base mb-2 sm:mb-3 px-0 sm:px-4 rounded bg-[#EEF7FF] w-full grid grid-cols-3 text-black font-medium"
                 >
                   <div className="flex items-center gap-2">
                     <img className="object-contain h-8" src={profile} alt="" />

@@ -54,7 +54,7 @@ const BusinessTable = ({ rows }) => {
                 return (
                   <div
                     key={business.id}
-                    className={`mb-1 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium
+                    className={`mb-2 px-0 sm:px-4 rounded bg-[#024D90] w-full grid grid-cols-5 text-sm text-white font-medium
                     ${business.isDisabled ? "opacity-50" : "opacity-100"}`}
                   >
                     <div className="col-span-2 flex items-center gap-2">
