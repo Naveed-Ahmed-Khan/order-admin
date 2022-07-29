@@ -6,12 +6,9 @@ import { useParams } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import BackgroundPayment from "../components/UI/BackgroundPayment";
 
-// Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
-const stripePromise = loadStripe(
-  "pk_test_51LMtfiCruvk9OWrHLtHTTBf69yXQt3zVq35eSsItKjA6s04XuJeiJYfTabiKjx2u939T03bYSPcc6EED7atgudNk00pEM1ifty"
-);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 export default function App() {
   const [clientSecret, setClientSecret] = useState("");

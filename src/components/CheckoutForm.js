@@ -20,7 +20,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 export default function CheckoutForm({ selectedPlanId }) {
   // const { currentUser } = useAuth();
   const { subscriptions, selectedUserInfo, updateCheck } = useStateContext();
-  console.log(selectedUserInfo);
+  // console.log(selectedUserInfo[0]);
   const selectedSubscription = subscriptions.filter(
     (sub) => sub.id === selectedPlanId
   );
@@ -31,7 +31,7 @@ export default function CheckoutForm({ selectedPlanId }) {
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!stripe) {
@@ -66,15 +66,13 @@ export default function CheckoutForm({ selectedPlanId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
+    let data = {};
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
-    setIsLoading(true);
-
     try {
       const response = await stripe.confirmPayment({
         elements,
@@ -85,32 +83,6 @@ export default function CheckoutForm({ selectedPlanId }) {
           // return_url: "http://localhost:3000/dashboard/home",
         },
       });
-      console.log("After confirmPayment");
-      console.log(response);
-
-      const data = {
-        activeSubscription: {
-          ...selectedSubscription[0],
-          subscriptionDate: Timestamp.fromDate(new Date()),
-          expirationDate: Timestamp.fromDate(new Date(Date.now() + 2629800000)), //1 month in milliseconds
-          // expirationDate: Timestamp.fromDate(new Date(Date.now() + 30000)), //1 month in milliseconds
-        },
-        notifications: [
-          ...selectedUserInfo[0].notifications,
-          {
-            title: "Success",
-            message: `You have subscribed to ${selectedSubscription[0].name} plan`,
-            id: Date.now(),
-          },
-        ],
-        unreadNotifications: selectedUserInfo[0].unreadNotifications + 1,
-      };
-      await updateDoc(
-        doc(collection(db, "users"), selectedUserInfo[0].businessId),
-        data
-      );
-      updateCheck();
-
       if (response.error !== undefined) {
         if (
           response.error.type === "card_error" ||
@@ -121,6 +93,51 @@ export default function CheckoutForm({ selectedPlanId }) {
           setMessage("An unexpected error occurred.");
         }
       }
+      console.log("After confirmPayment");
+      console.log(response);
+      console.log(message);
+
+      if (response.error !== undefined) {
+        data = {
+          activeSubscription: null,
+          notifications: [
+            ...selectedUserInfo[0].notifications,
+            {
+              title: "Failure",
+              message: `${response.error.message}`,
+              id: Date.now(),
+            },
+          ],
+          unreadNotifications: selectedUserInfo[0].unreadNotifications + 1,
+        };
+      } else {
+        data = {
+          activeSubscription: {
+            ...selectedSubscription[0],
+            subscriptionDate: Timestamp.fromDate(new Date()),
+            expirationDate: Timestamp.fromDate(
+              new Date(Date.now() + 2629800000)
+            ), //1 month in milliseconds
+          },
+          notifications: [
+            ...selectedUserInfo[0].notifications,
+            {
+              title: "Success",
+              message: `You have subscribed to ${selectedSubscription[0].name} plan`,
+              id: Date.now(),
+            },
+          ],
+          unreadNotifications: selectedUserInfo[0].unreadNotifications + 1,
+        };
+      }
+
+      console.log(data);
+
+      await updateDoc(
+        doc(collection(db, "users"), selectedUserInfo[0].businessId),
+        data
+      );
+      updateCheck();
     } catch (error) {
       console.log(error);
       setMessage("An unexpected error occurred.");
@@ -135,7 +152,6 @@ export default function CheckoutForm({ selectedPlanId }) {
 
     setIsLoading(false);
   };
-  console.log(message);
 
   return (
     <form
@@ -144,15 +160,16 @@ export default function CheckoutForm({ selectedPlanId }) {
       onSubmit={handleSubmit}
     >
       <h3 className="mb-6 text-2xl text-primary-500 font-bold">Card Details</h3>
+
       <PaymentElement id="payment-element" />
       <div className="sm:flex sm:gap-4">
         <button
           className="mt-6 px-6 py-3 w-full bg-primary-500 text-white text-lg font-medium rounded-md hover:bg-primary-400 hover:scale-105 active:scale-100 active:bg-primary-500 hover:shadow-xl transition-all duration-300"
-          disabled={isLoading || !stripe || !elements}
+          disabled={!isLoading || !stripe || !elements}
           id="submit"
         >
           <span id="button-text">
-            {isLoading ? (
+            {!isLoading ? (
               <div className="spinner" id="spinner">
                 Loading...
               </div>
@@ -168,6 +185,7 @@ export default function CheckoutForm({ selectedPlanId }) {
           Cancel
         </button>
       </div>
+
       {/* Show any error or success messages */}
       {message && (
         <div className="mt-2 text-gray-600 text-center" id="payment-message">

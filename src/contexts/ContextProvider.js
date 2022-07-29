@@ -30,6 +30,9 @@ export const ContextProvider = ({ children }) => {
   const [selectedUserInfo, setSelectedUserInfo] = useState([]);
   const [notification, setNotification] = useState(null);
 
+  console.log(currentUser);
+  console.log(selectedUserInfo);
+
   /*   const q = query(
     collection(db, "users"),
     where("businessId", "==", currentUser.uid || "")
@@ -47,7 +50,7 @@ export const ContextProvider = ({ children }) => {
       if (expirationDate < dateToday) {
         console.log("expired");
         try {
-          await updateDoc(doc(collection(db, "users"), currentUser.uid), {
+          await updateDoc(doc(collection(db, "users"), currentUser?.uid), {
             activeSubscription: null,
           });
         } catch (error) {
@@ -62,7 +65,7 @@ export const ContextProvider = ({ children }) => {
     if (selectedUserInfo[0]?.activeSubscription) {
       checkExpiration(selectedUserInfo[0]?.activeSubscription);
     }
-  }, [currentUser.uid, selectedUserInfo]);
+  }, [currentUser?.uid, selectedUserInfo]);
 
   useEffect(() => {
     const filterUsers = () => {
@@ -72,13 +75,15 @@ export const ContextProvider = ({ children }) => {
       let businesses = usersData.filter((user) => user.type === "business");
       setBusinesses(businesses);
       setSelectedUserInfo(
-        businesses.filter((business) => business.businessId === currentUser.uid)
+        businesses.filter(
+          (business) => business.businessId === currentUser?.uid
+        )
       );
     };
     setSubscriptions(subscriptionData);
     filterUsers();
     filterBusinesses();
-  }, [usersData, subscriptionData, currentUser.uid]);
+  }, [usersData, subscriptionData, currentUser?.uid]);
 
   useEffect(() => {
     const setPlacesData = () => {
@@ -99,6 +104,7 @@ export const ContextProvider = ({ children }) => {
   const updateCheck = () => {
     setCheck(!check);
   };
+
   const updateNotification = (value) => {
     setNotification(value);
   };
