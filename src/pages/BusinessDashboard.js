@@ -1,6 +1,13 @@
-import { collection, doc, query, updateDoc, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import BackgroundDashboard from "../components/UI/BackgroundDashboard";
 import BusinessSidebar from "../components/UI/BusinessSidebar";
 import DetailsSidebar from "../components/UI/DetailsSidebar";
@@ -12,82 +19,97 @@ import { db } from "../firebase-config";
 import {
   useCollection,
   useCollectionData,
+  useDocumentData,
 } from "react-firebase-hooks/firestore";
 import Alert from "../components/UI/Alert";
+import NotSubscribed from "./NotSubscribed";
+import { useStateContext } from "../contexts/ContextProvider";
 // import HomeBackground from "../components/HomeBackground";
 // import { useStateContext } from "../contexts/ContextProvider";
 
 const BusinessDashboard = () => {
-  // const { unReadMessages } = useStateContext();
+  // const { selectedUserInfo } = useStateContext();
+  // console.log(selectedUserInfo);
+  const location = useLocation();
   const { currentUser } = useAuth();
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
 
-  const q = query(
-    collection(db, "users"),
-    where("businessId", "==", currentUser.uid || "")
+  const selectedUserInfo = useDocumentData(
+    doc(collection(db, "users"), currentUser?.uid)
   );
-  // const fetchedData = await getDocs(q);
-  const [selectedUserInfo] = useCollectionData(q, { idField: currentUser.uid });
   console.log(selectedUserInfo);
 
-  const checkExpiration = async (activeSubscription) => {
-    if (
-      activeSubscription !== null &&
-      activeSubscription.expirationDate.toDate().getTime() <
-        new Date().getTime()
-    ) {
-      console.log("expired");
-      try {
-        await updateDoc(doc(collection(db, "users"), currentUser.uid), {
-          ...selectedUserInfo,
-          activeSubscription: null,
-        });
-      } catch (error) {
-        console.log(error);
+  useEffect(() => {
+    const checkDate = async () => {
+      if (selectedUserInfo[0]?.activeSubscription) {
+        console.log("subscribe");
+        const dateToday = new Date().getTime();
+        const expirationDate =
+          selectedUserInfo[0]?.activeSubscription?.expirationDate
+            .toDate()
+            .getTime();
+        if (expirationDate <= dateToday) {
+          console.log("expirationDate");
+          await updateDoc(doc(collection(db, "users"), currentUser?.uid), {
+            activeSubscription: null,
+          });
+
+          console.log("subscription expired");
+        }
+      } else {
+        console.log("no subscription");
       }
-    } else {
-      // console.log("not expired");
-      return;
-    }
-  };
+    };
+    checkDate();
+  }, [currentUser?.uid, location.pathname, selectedUserInfo]);
 
   return (
     <>
-      <div>
-        {/* <HomeBackground /> */}
-        <BackgroundDashboard />
+      {/* <HomeBackground /> */}
+      <BackgroundDashboard />
 
-        <BusinessSidebar
-          open={open}
-          setOpen={setOpen}
-          showBackdrop={showBackdrop}
-          setShowBackdrop={setShowBackdrop}
-        />
+      <BusinessSidebar
+        open={open}
+        setOpen={setOpen}
+        showBackdrop={showBackdrop}
+        setShowBackdrop={setShowBackdrop}
+      />
 
-        <Navbar
-          open={open}
-          setOpen={setOpen}
-          showBackdrop={showBackdrop}
-          setShowBackdrop={setShowBackdrop}
-        />
-        <DetailsSidebar
-          open={open}
-          setOpen={setOpen}
-          showBackdrop={showBackdrop}
-          setShowBackdrop={setShowBackdrop}
-        />
-        <div className="pt-14 md:pt-0 md:ml-40 relative overflow-auto ">
-          <Outlet />
-          {/* <div className="fixed bottom-6 right-6">
+      <Navbar
+        open={open}
+        setOpen={setOpen}
+        showBackdrop={showBackdrop}
+        setShowBackdrop={setShowBackdrop}
+      />
+
+      <DetailsSidebar
+        open={open}
+        setOpen={setOpen}
+        showBackdrop={showBackdrop}
+        setShowBackdrop={setShowBackdrop}
+      />
+      <div className={` pt-14 md:pt-0 md:ml-40 overflow-hidden`}>
+        {/* <div className="fixed bottom-6 right-6">
             <Alert title={"Success"} color={"emerald"}>
               <p className="text-sm text-gray-600">
                 You successfully Subscribed
               </p>
             </Alert>
           </div> */}
+        {selectedUserInfo[0]?.isDisabled ? (
+          <NotSubscribed disabled />
+        ) : (
+          <>{!selectedUserInfo[0]?.activeSubscription && <NotSubscribed />}</>
+        )}
+        <div
+          className={`${
+            !selectedUserInfo[0]?.activeSubscription &&
+            "blur-sm opacity-50 h-screen"
+          }`}
+        >
+          <Outlet />
         </div>
       </div>
     </>

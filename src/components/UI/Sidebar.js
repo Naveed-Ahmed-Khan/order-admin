@@ -1,5 +1,4 @@
 // import { onAuthStateChanged, signOut } from "firebase/auth";
-
 // import { auth } from "../api/firebase-config";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -13,8 +12,8 @@ const Sidebar = (props) => {
     <>
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit  bg-primary-500
-        overflow-y-auto 
+        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit bg-primary-500
+        overflow-y-auto
         ${
           props.open === true
             ? "translate-x-0 opacity-100"
@@ -23,13 +22,25 @@ const Sidebar = (props) => {
       >
         <nav className="bg-light w-40 h-screen justify-between flex flex-col">
           <div className="flex flex-col items-center justify-center mt-10 mb-10">
-            <Link to={"/"}>
+            <Link
+              onClick={() => {
+                props.setShowBackdrop(false);
+                props.setOpen(false);
+              }}
+              to={"/home"}
+            >
               <h2 className="text-white text-3xl font-bold">LOGO</h2>
             </Link>
             <div className="mt-8">
               <ul>
                 <li className="my-12 text-center">
-                  <Link to={"/home"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/home"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/home"
@@ -49,7 +60,13 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/items"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/items"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/items"
@@ -69,7 +86,13 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/users"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/users"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/users"
@@ -89,7 +112,13 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/business"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/business"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/business"
@@ -114,7 +143,14 @@ const Sidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/login"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                      logout();
+                    }}
+                    to={"/login"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/login"
@@ -144,9 +180,10 @@ const Sidebar = (props) => {
           </div>
           <div className="mb-8 grid place-content-center ">
             <Link
-              /* onClick={async () => {
-                    await signOut(auth);
-                  }} */
+              onClick={() => {
+                props.setShowBackdrop(false);
+                props.setOpen(false);
+              }}
               to={"/"}
             >
               <span
@@ -189,7 +226,7 @@ const Sidebar = (props) => {
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block md:z-40 fixed w-[90%] max-w-fit mx-auto bg-primary-500">
-        <div className="hidden sm:flex sm:flex-col sm:gap-12 sm:text-3xl sm:min-h-full sm:max-w-72">
+        <div className="hidden sm:flex sm:flex-col sm:gap-12 sm:text-3xl sm:min-h-full">
           <div className="w-full max-w-[180px]">
             <nav className="bg-light w-40 h-screen justify-between flex flex-col">
               <div className="flex flex-col items-center justify-center mt-20 mb-10">
@@ -284,7 +321,12 @@ const Sidebar = (props) => {
                       </Link>
                     </li>
                     <li className="my-12 text-center">
-                      <Link to={"/login"}>
+                      <Link
+                        onClick={() => {
+                          logout();
+                        }}
+                        to={"/login"}
+                      >
                         <span
                           className={`${
                             location.pathname === "/login"
@@ -314,12 +356,7 @@ const Sidebar = (props) => {
                 </div>
               </div>
               <div className="mb-4 grid place-content-center ">
-                <Link
-                  /* onClick={async () => {
-                    await signOut(auth);
-                  }} */
-                  to={"/"}
-                >
+                <Link to={"/"}>
                   <span
                     className={`${
                       location.pathname === "/"

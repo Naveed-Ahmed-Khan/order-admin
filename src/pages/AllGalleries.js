@@ -15,7 +15,7 @@ export default function AllGalleries() {
   const [filterValue, setFilterValue] = useState("");
 
   return (
-    <div className="pt-[5vh] md:mt-[8vh] w-full px-5 sm:px-10 lg:px-16">
+    <div className="pt-[5vh] md:pt-[14vh] w-full px-5 sm:px-10 lg:px-16">
       <section className="mb-10">
         <div className="mb-4 xl:mb-6 items-center justify-between w-full">
           <h2 className="text-3xl text-primary-500 font-semibold leading-tight">

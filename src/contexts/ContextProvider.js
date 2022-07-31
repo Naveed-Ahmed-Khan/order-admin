@@ -1,7 +1,10 @@
 // import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import { collection, doc, query, updateDoc, where } from "firebase/firestore";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 import { db } from "../firebase-config";
 import useFetch from "../hooks/useFetch";
 import { useAuth } from "./AuthContext";
@@ -40,6 +43,10 @@ export const ContextProvider = ({ children }) => {
   // const fetchedData = await getDocs(q);
   const [selectedUserInfo] = useCollectionData(q, { idField: currentUser.uid });
   console.log(selectedUserInfo); */
+
+  /*   const user = useDocumentData(doc(collection(db, "users"), currentUser?.uid));
+  console.log(user);
+  setSelectedUserInfo(user); */
 
   useEffect(() => {
     const checkExpiration = async (activeSubscription) => {
@@ -99,7 +106,7 @@ export const ContextProvider = ({ children }) => {
     setPlacesData();
   }, [currentUser?.email, currentUser?.uid, placesData]);
 
-  console.log(locations);
+  // console.log(locations);
 
   const updateCheck = () => {
     setCheck(!check);
@@ -115,109 +122,9 @@ export const ContextProvider = ({ children }) => {
     setSelectedPlace(value);
   };
 
-  console.log(customers);
-  console.log(businesses);
-  console.log(locations);
-
-  /* const { data: usersData } = useFetch("Users", check);
-  const { data: availabilityData } = useFetch("weekstatus", check);
-  const { appointmentData } = useAppointments(check);
-
-  const q2 = query(
-    collection(db, "messages"),
-    where("recieverId", "==", "admin"),
-    where("isRead", "==", false)
-  );
-
-  const [unRead] = useCollectionData(q2, { idField: "id" });
-
-  console.log(appointmentData);
-
-  const updateUnReadMessages = (unRead) => {
-    setUnReadMessages(unRead);
-  };
-
-
-  const updateUsers = (data) => {
-    setUsers(data);
-  };
-
-  const updateAppointments = (id, approved) => {
-    console.log(id + " " + approved);
-    appointments.forEach((appointment) => {
-      if (appointment.id === id) {
-        console.log(appointment);
-        appointment.isApproved = approved;
-      }
-    });
-    console.log(appointments);
-    setAppointments(appointments);
-  };
-  const updateAvailability = (id, start, end) => {
-    console.log(start + " " + end);
-    availability.forEach((avail) => {
-      if (avail.id === id) {
-        console.log(avail);
-        avail.bookingStart = start;
-        avail.bookingEnd = end;
-      }
-    });
-    console.log(availability);
-    setAvailability(availability);
-  };
-  const updateOffday = (id, offday) => {
-    console.log(offday);
-    availability.forEach((avail) => {
-      if (avail.id === id) {
-        console.log(avail);
-        avail.isOffday = offday;
-      }
-    });
-    console.log(availability);
-    setAvailability(availability);
-  };
-
-  useEffect(() => {
-    updateUnReadMessages(unRead?.length);
-  }, [unRead]);
-
-  useEffect(() => {
-    const initialize = () => {
-      setUsers(usersData);
-      setAppointments(appointmentData);
-      setAvailability(availabilityData);
-    };
-    initialize();
-    // setIsLoading(false);
-  }, [appointmentData, usersData, availabilityData]);
-
-  const confirmAppointment = (selectedAppointment) => {
-    console.log(selectedAppointment);
-    availability.forEach((avail) => {
-      // console.log(selectedAppointment.Date.toDate().toDateString());
-      if (
-        selectedAppointment.Date.toDate().toDateString() ===
-        avail.date.toDate().toDateString()
-      ) {
-        console.log(avail.date.toDate().toDateString());
-        avail.slots.forEach(async (slot) => {
-          let filteredSlots = [];
-          if (selectedAppointment.slotId === slot.id) {
-            console.log(avail.slots);
-            console.log(selectedAppointment.slotId);
-            filteredSlots = avail?.slots?.filter(
-              (slot) => selectedAppointment.slotId !== slot.id
-            );
-            console.log(filteredSlots);
-            await updateDoc(doc(collection(db, "weekstatus"), avail.id), {
-              slots: filteredSlots,
-            });
-          }
-        });
-      }
-    });
-  };
- */
+  // console.log(customers);
+  // console.log(businesses);
+  // console.log(locations);
 
   const exportValues = {
     loading,
@@ -234,19 +141,6 @@ export const ContextProvider = ({ children }) => {
     updateSelectedPlace,
     notification,
     updateNotification,
-
-    /* currentUser,
-    users,
-    appointments,
-    availability,
-    unReadMessages,
-    setCurrentUser,
-    updateAppointments,
-    updateAvailability,
-    updateOffday,
-    updateUsers,
-    updateUnReadMessages,
-    confirmAppointment, */
   };
 
   return (

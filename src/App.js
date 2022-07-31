@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 import AddItem from "./pages/AddItem";
 import AllGalleries from "./pages/AllGalleries";
 import Business from "./pages/Business";
@@ -15,6 +16,7 @@ import Subscription from "./pages/Subscription";
 import Users from "./pages/Users";
 
 function App() {
+  const { currentUser } = useAuth();
   return (
     <Routes>
       {/* Login  */}
@@ -32,6 +34,7 @@ function App() {
         <Route path="/add-item" element={<AddItem />} />
         <Route path="/edit/:item" element={<EditItem />} />
       </Route>
+
       <Route path="/dashboard" element={<BusinessDashboard />}>
         <Route path="/dashboard/home" element={<BusinessHome />} />
         <Route path="/dashboard/items" element={<AllGalleries />} />

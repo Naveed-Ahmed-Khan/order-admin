@@ -1,10 +1,9 @@
-// import { onAuthStateChanged, signOut } from "firebase/auth";
-
-// import { auth } from "../api/firebase-config";
 import { Link, useLocation } from "react-router-dom";
 import Backdrop from "./Backdrop";
+import { useAuth } from "../../contexts/AuthContext";
 
 const BusinessSidebar = (props) => {
+  const { logout } = useAuth();
   const location = useLocation();
 
   return (
@@ -21,13 +20,25 @@ const BusinessSidebar = (props) => {
       >
         <nav className="bg-light w-40 h-screen justify-between flex flex-col">
           <div className="flex flex-col items-center justify-center mt-10 mb-10">
-            <Link to={"/dashboard/home"}>
+            <Link
+              onClick={() => {
+                props.setShowBackdrop(false);
+                props.setOpen(false);
+              }}
+              to={"/dashboard/home"}
+            >
               <h2 className="text-white text-3xl font-bold">LOGO</h2>
             </Link>
             <div className="mt-8">
               <ul>
                 <li className="my-12 text-center">
-                  <Link to={"/dashboard/home"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/dashboard/home"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/dashboard/home"
@@ -47,7 +58,13 @@ const BusinessSidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/dashboard/items"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/dashboard/items"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/dashboard/items"
@@ -67,7 +84,13 @@ const BusinessSidebar = (props) => {
                   </Link>
                 </li>
                 <li className="my-12 text-center">
-                  <Link to={"/dashboard/add-item"}>
+                  <Link
+                    onClick={() => {
+                      props.setShowBackdrop(false);
+                      props.setOpen(false);
+                    }}
+                    to={"/dashboard/add-item"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/dashboard/add-item"
@@ -94,7 +117,12 @@ const BusinessSidebar = (props) => {
                 </li>
 
                 <li className="my-12 text-center">
-                  <Link to={"/login"}>
+                  <Link
+                    onClick={() => {
+                      logout();
+                    }}
+                    to={"/login"}
+                  >
                     <span
                       className={`${
                         location.pathname === "/login"
@@ -123,15 +151,10 @@ const BusinessSidebar = (props) => {
             </div>
           </div>
           <div className="mb-8 grid place-content-center ">
-            <Link
-              /* onClick={async () => {
-                    await signOut(auth);
-                  }} */
-              to={"/dashboard/home"}
-            >
+            <Link to={"/subscription"}>
               <span
                 className={`${
-                  location.pathname === "/dashboard/home"
+                  location.pathname === "/subscription"
                     ? "text-white"
                     : "text-[#45E3FF]"
                 }  mx-auto hover:text-white transition-all duration-300`}
@@ -248,7 +271,12 @@ const BusinessSidebar = (props) => {
                     </li>
 
                     <li className="my-12 text-center">
-                      <Link to={"/login"}>
+                      <Link
+                        onClick={() => {
+                          logout();
+                        }}
+                        to={"/login"}
+                      >
                         <span
                           className={`${
                             location.pathname === "/login"
@@ -277,12 +305,7 @@ const BusinessSidebar = (props) => {
                 </div>
               </div>
               <div className="mb-4 grid place-content-center ">
-                <Link
-                  /* onClick={async () => {
-                    await signOut(auth);
-                  }} */
-                  to={"/subscription"}
-                >
+                <Link to={"/subscription"}>
                   <span
                     className={`${
                       location.pathname === "/subscription"

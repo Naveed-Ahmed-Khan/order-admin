@@ -69,7 +69,7 @@ export default function AddItem() {
   return (
     <form
       onSubmit={submitHandler}
-      className="pt-[5vh] md:mt-[12vh] w-full mx-auto max-w-6xl pb-8 px-5 sm:px-10 lg:px-16"
+      className="pt-[5vh] md:pt-[14vh] w-full mx-auto max-w-6xl pb-8 px-5 sm:px-10 lg:px-16"
     >
       <section className="flex flex-col xl:flex-row items-center xl:items-start gap-12 ">
         {image ? (

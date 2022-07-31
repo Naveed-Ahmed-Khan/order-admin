@@ -6,20 +6,52 @@ import Dropdown from "./Dropdown";
 import { collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { useAuth } from "../../contexts/AuthContext";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 // import { useStateContext } from "../contexts/ContextProvider";
 
 const Navbar = (props) => {
+  const { currentUser } = useAuth();
   const { selectedUserInfo, updateCheck } = useStateContext();
   const [isNotification, setIsNotification] = useState(false);
 
   const location = useLocation();
   // const navigate = useNavigate();
 
+  const selectedUser = useDocumentData(
+    doc(collection(db, "users"), currentUser?.uid)
+  );
+  console.log(selectedUser);
+
+  useEffect(() => {
+    const checkDate = async () => {
+      if (selectedUser[0]?.activeSubscription) {
+        console.log("subscribe");
+        const dateToday = new Date().getTime();
+        const expirationDate =
+          selectedUser[0]?.activeSubscription?.expirationDate
+            .toDate()
+            .getTime();
+        if (expirationDate <= dateToday) {
+          console.log("expirationDate");
+          await updateDoc(doc(collection(db, "users"), currentUser?.uid), {
+            activeSubscription: null,
+          });
+
+          console.log("subscription expired");
+        }
+      } else {
+        console.log("no subscription");
+      }
+    };
+    checkDate();
+  }, [currentUser?.uid, location.pathname, selectedUser]);
+
   return (
     <>
       {/* Mobile Navbar */}
-      <div className="z-30 md:hidden fixed w-full flex items-center justify-between px-6 h-16 bg-primary-500">
+      <div className="z-20 md:hidden fixed w-full flex items-center justify-between px-6 h-16 bg-primary-500">
         <button
           onClick={() => {
             props.setOpen(!props.open);
@@ -45,48 +77,59 @@ const Navbar = (props) => {
           <div
             className={`flex gap-4 items-center hover:opacity-100 mx-auto hover:text-primary transition-all duration-300 bg-primary-500`}
           >
-            <Dropdown isNotification={isNotification}>
-              <div
-                onClick={async () => {
-                  setIsNotification((prev) => !prev);
-                }}
-                className="relative bg-primary-500"
+            {selectedUser[0]?.activeSubcription ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-8 w-8 text-white"
+                viewBox="0 0 20 20"
+                fill="currentColor"
               >
-                <button
+                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+              </svg>
+            ) : (
+              <Dropdown isNotification={isNotification}>
+                <div
                   onClick={async () => {
-                    if (selectedUserInfo[0]?.unreadNotifications > 0) {
-                      await updateDoc(
-                        doc(collection(db, "users"), selectedUserInfo[0].id),
-                        {
-                          unreadNotifications: 0,
-                        }
-                      );
-                      updateCheck((prev) => !prev);
-                    }
+                    setIsNotification((prev) => !prev);
                   }}
-                  className="bg-primary-500"
+                  className="relative bg-primary-500"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-8 w-8 text-white"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                  <button
+                    onClick={async () => {
+                      if (selectedUserInfo[0]?.unreadNotifications > 0) {
+                        await updateDoc(
+                          doc(collection(db, "users"), currentUser?.uid),
+                          {
+                            unreadNotifications: 0,
+                          }
+                        );
+                        updateCheck();
+                      }
+                    }}
+                    className="bg-primary-500"
                   >
-                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                  </svg>
-                </button>
-                {selectedUserInfo[0]?.unreadNotifications > 0 && (
-                  <div
-                    className="absolute w-5 h-5 bg-red-600 flex items-center justify-center rounded-full
-                -top-3 -right-3"
-                  >
-                    <p className="text-xs font-medium text-white">
-                      {selectedUserInfo[0]?.unreadNotifications}
-                    </p>
-                  </div>
-                )}
-              </div>
-            </Dropdown>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-8 w-8 text-white"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                    </svg>
+                  </button>
+                  {selectedUserInfo[0]?.unreadNotifications > 0 && (
+                    <div
+                      className="absolute w-5 h-5 bg-red-600 flex items-center justify-center rounded-full
+                    -top-3 -right-3"
+                    >
+                      <p className="text-xs font-medium text-white">
+                        {selectedUserInfo[0]?.unreadNotifications}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Dropdown>
+            )}
 
             <img className="object-contain h-12" src={pic} alt="" />
             <div>
@@ -97,7 +140,12 @@ const Navbar = (props) => {
       </div>
 
       {/* Desktop Navbar */}
-      <div className="z-30 fixed hidden md:pl-52 md:pr-8 md:flex w-full items-center justify-between px-6 pt-10 pb-12 h-16 bg-white">
+
+      <div
+        className={` ${
+          selectedUser[0]?.activeSubcription ? "blur-sm" : "blur-0"
+        } z-30 fixed hidden md:pl-52 md:pr-8 md:flex w-full items-center justify-between px-6 pt-10 pb-12 h-16 bg-white`}
+      >
         {location.pathname === "/home" ||
         location.pathname === "/dashboard/home" ? (
           <div>
@@ -122,12 +170,12 @@ const Navbar = (props) => {
                   onClick={async () => {
                     if (selectedUserInfo[0]?.unreadNotifications > 0) {
                       await updateDoc(
-                        doc(collection(db, "users"), selectedUserInfo[0].id),
+                        doc(collection(db, "users"), currentUser?.uid),
                         {
                           unreadNotifications: 0,
                         }
                       );
-                      updateCheck((prev) => !prev);
+                      updateCheck();
                     }
                   }}
                 >
