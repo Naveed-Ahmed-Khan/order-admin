@@ -24,6 +24,7 @@ import {
 import Alert from "../components/UI/Alert";
 import NotSubscribed from "./NotSubscribed";
 import { useStateContext } from "../contexts/ContextProvider";
+import Spinner from "../components/UI/Spinner";
 // import HomeBackground from "../components/HomeBackground";
 // import { useStateContext } from "../contexts/ContextProvider";
 
@@ -39,7 +40,7 @@ const BusinessDashboard = () => {
   const selectedUserInfo = useDocumentData(
     doc(collection(db, "users"), currentUser?.uid)
   );
-  console.log(selectedUserInfo);
+  console.log(selectedUserInfo[1]);
 
   useEffect(() => {
     const checkDate = async () => {
@@ -62,6 +63,7 @@ const BusinessDashboard = () => {
         console.log("no subscription");
       }
     };
+
     checkDate();
   }, [currentUser?.uid, location.pathname, selectedUserInfo]);
 
@@ -90,28 +92,34 @@ const BusinessDashboard = () => {
         showBackdrop={showBackdrop}
         setShowBackdrop={setShowBackdrop}
       />
-      <div className={` pt-14 md:pt-0 md:ml-40 overflow-hidden`}>
-        {/* <div className="fixed bottom-6 right-6">
+      {!selectedUserInfo[1] ? (
+        <div
+          className={`pt-14 md:pt-0 md:ml-40 overflow-hidden transition-all duration-500 ease-out `}
+        >
+          {/* <div className="fixed bottom-6 right-6">
             <Alert title={"Success"} color={"emerald"}>
               <p className="text-sm text-gray-600">
                 You successfully Subscribed
               </p>
             </Alert>
           </div> */}
-        {selectedUserInfo[0]?.isDisabled ? (
-          <NotSubscribed disabled />
-        ) : (
-          <>{!selectedUserInfo[0]?.activeSubscription && <NotSubscribed />}</>
-        )}
-        <div
-          className={`${
-            !selectedUserInfo[0]?.activeSubscription &&
-            "blur-sm opacity-50 h-screen"
-          }`}
-        >
-          <Outlet />
+          {selectedUserInfo[0]?.isDisabled && <NotSubscribed disabled />}
+          {!selectedUserInfo[0]?.isDisabled &&
+            !selectedUserInfo[0]?.activeSubscription && <NotSubscribed />}
+          <div
+            className={`${
+              !selectedUserInfo[0]?.activeSubscription &&
+              "blur-sm opacity-50 h-screen"
+            }`}
+          >
+            <Outlet />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-screen h-screen flex items-center justify-center text-primary-500">
+          <Spinner />
+        </div>
+      )}
     </>
   );
 };

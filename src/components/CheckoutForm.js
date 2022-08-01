@@ -11,9 +11,10 @@ import { collection, doc, updateDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase-config";
 import { useStateContext } from "../contexts/ContextProvider";
 import Spinner from "./UI/Spinner";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function CheckoutForm({ selectedPlanId }) {
-  // const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
   const { subscriptions, selectedUserInfo, updateCheck } = useStateContext();
   // console.log(selectedUserInfo[0]);
   const selectedSubscription = subscriptions.filter(
@@ -100,24 +101,21 @@ export default function CheckoutForm({ selectedPlanId }) {
           ...selectedSubscription[0],
           subscriptionDate: Timestamp.fromDate(new Date()),
           expirationDate: Timestamp.fromDate(new Date(Date.now() + 2629800000)), //1 month in milliseconds
-          // expirationDate: Timestamp.fromDate(new Date(Date.now() + 30000)), //30 in milliseconds
+          // expirationDate: Timestamp.fromDate(new Date(Date.now() + 3000)), //30 in milliseconds
         },
-        notifications: [
-          ...selectedUserInfo[0].notifications,
+        /* notifications: [
+          ...selectedUserInfo[0]?.notifications,
           {
             title: "Success",
             message: `You have subscribed to ${selectedSubscription[0].name} plan`,
             id: Date.now(),
           },
         ],
-        unreadNotifications: selectedUserInfo[0].unreadNotifications + 1,
+        unreadNotifications: selectedUserInfo[0]?.unreadNotifications + 1, */
       };
       console.log(data);
       try {
-        await updateDoc(
-          doc(collection(db, "users"), selectedUserInfo[0].businessId),
-          data
-        );
+        await updateDoc(doc(collection(db, "users"), currentUser?.uid), data);
         updateCheck();
       } catch (error) {
         console.log(error);
